@@ -1,0 +1,73 @@
+:root {
+  /* Colors */
+  --bg-primary: #0B0F19;
+  --bg-surface: #151B2B;
+  --bg-surface-hover: #1C2438;
+  --bg-surface-active: #232D46;
+  --bg-surface-card: #131826;
+  --bg-glass: rgba(21, 27, 43, 0.85);
+
+  --border-subtle: #1E2738;
+  --border-medium: #2A364F;
+  --border-focus: #38BDF8;
+
+  /* Node Categories */
+  --user-cyan: #22D3EE;
+  --user-cyan-hover: #38BDF8;
+  --user-cyan-glow: rgba(34, 211, 238, 0.25);
+  --user-cyan-bg: rgba(34, 211, 238, 0.10);
+  --user-cyan-border: rgba(34, 211, 238, 0.4);
+
+  --video-pink: #F472B6;
+  --video-pink-hover: #FB7185;
+  --video-pink-glow: rgba(244, 114, 182, 0.25);
+  --video-pink-bg: rgba(244, 114, 182, 0.10);
+  --video-pink-border: rgba(244, 114, 182, 0.4);
+
+  /* Status and Accents */
+  --accent-green: #22C55E;
+  --accent-green-bg: rgba(34, 197, 94, 0.12);
+  --accent-green-glow: rgba(34, 197, 94, 0.3);
+
+  --accent-purple: #A855F7;
+  --accent-purple-bg: rgba(168, 85, 247, 0.12);
+  --accent-purple-glow: rgba(168, 85, 247, 0.3);
+
+  --accent-amber: #F59E0B;
+  --accent-amber-bg: rgba(245, 158, 11, 0.12);
+
+  --accent-red: #EF4444;
+  --accent-red-bg: rgba(239, 68, 68, 0.12);
+
+  /* Typography */
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-inverse: #0B0F19;
+
+  /* Edge Colors */
+  --edge-default: #475569;
+  --edge-highlight: #38BDF8;
+  --edge-path: #A855F7;
+  --edge-new: #22C55E;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5);
+  --shadow-glow-cyan: 0 0 20px rgba(34, 211, 238, 0.35);
+  --shadow-glow-pink: 0 0 20px rgba(244, 114, 182, 0.35);
+  --shadow-glow-green: 0 0 20px rgba(34, 197, 94, 0.35);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
