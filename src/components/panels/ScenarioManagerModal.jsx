@@ -3,7 +3,7 @@ import { useGraph } from '../../context/GraphContext';
 import { SCENARIOS } from '../../data/scenarios';
 import { Layers, Download, Upload, X, Copy } from 'lucide-react';
 
-export default function ScenarioManagerModal({ isOpen, onClose }) {
+export default function ScenarioManagerModal({ isOpen, onClose, setActiveView }) {
   const {
     currentScenarioId,
     loadScenario,
@@ -16,6 +16,21 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('scenarios');
 
   if (!isOpen) return null;
+
+  const handleSelectScenario = (scenId) => {
+    loadScenario(scenId);
+    if (setActiveView) {
+      setActiveView('lab');
+    }
+    onClose();
+  };
+
+  const handleGoToActive = () => {
+    if (setActiveView) {
+      setActiveView('lab');
+    }
+    onClose();
+  };
 
   const handleCopyJson = () => {
     const jsonStr = exportToJson();
@@ -133,15 +148,17 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
                 return (
                   <div
                     key={scen.id}
+                    onClick={() => (isActive ? handleGoToActive() : handleSelectScenario(scen.id))}
                     style={{
                       padding: '1rem',
                       borderRadius: 'var(--radius-md)',
-                      backgroundColor: isActive ? 'rgba(225, 29, 72, 0.1)' : 'var(--bg-surface-card)',
+                      backgroundColor: isActive ? 'rgba(225, 29, 72, 0.12)' : 'var(--bg-surface-card)',
                       border: isActive ? '1.5px solid #FE2C55' : '1px solid var(--border-subtle)',
                       transition: 'all 0.2s',
+                      cursor: 'pointer',
                     }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6, flexWrap: 'wrap', gap: 8 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#FFFFFF' }}>
                           {scen.name}
@@ -152,14 +169,18 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
                       </div>
 
                       <button
-                        onClick={() => {
-                          loadScenario(scen.id);
-                          onClose();
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (isActive) {
+                            handleGoToActive();
+                          } else {
+                            handleSelectScenario(scen.id);
+                          }
                         }}
-                        className={`btn btn-sm ${isActive ? 'btn-secondary' : 'btn-primary'}`}
-                        style={{ padding: '4px 12px', fontSize: '0.75rem' }}
+                        className={`btn btn-sm ${isActive ? 'btn-primary' : 'btn-secondary'}`}
+                        style={{ padding: '5px 14px', fontSize: '0.78rem', fontWeight: 800 }}
                       >
-                        {isActive ? 'Activo actualmente' : 'Cargar escenario'}
+                        {isActive ? '🚀 Ir al Laboratorio' : 'Cargar y abrir en Lab'}
                       </button>
                     </div>
 

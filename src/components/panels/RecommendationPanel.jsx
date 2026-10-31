@@ -16,9 +16,21 @@ export default function RecommendationPanel() {
   const [selectedUserId, setSelectedUserId] = useState('A');
   const [showFormulaDetails, setShowFormulaDetails] = useState(false);
 
+  const activeUserId = users.some((u) => u.id === selectedUserId)
+    ? selectedUserId
+    : users[0]?.id || '';
+
   const recResult = useMemo(() => {
-    return calculateRecommendations(selectedUserId, users, videos, edges);
-  }, [selectedUserId, users, videos, edges]);
+    if (!activeUserId) {
+      return {
+        targetUserId: '',
+        candidates: [],
+        hasRecommendations: false,
+        message: 'No hay usuarios en la red actual.',
+      };
+    }
+    return calculateRecommendations(activeUserId, users, videos, edges);
+  }, [activeUserId, users, videos, edges]);
 
   const handleApplyRecommendation = (candidate) => {
     setRecommendedNodeId(candidate.video.id);
@@ -26,6 +38,20 @@ export default function RecommendationPanel() {
       setHighlightedPath(candidate.justificationPath);
     }
   };
+
+  if (users.length === 0) {
+    return (
+      <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '0.75rem' }}>
+          <Sparkles size={20} color="#FE2C55" />
+          <h3 style={{ fontSize: '1.15rem', color: '#FFFFFF' }}>Motor de Recomendación de Contenido</h3>
+        </div>
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+          No hay usuarios registrados en el grafo actual. Agrega usuarios y videos al lienzo con los botones superiores para que el algoritmo pueda calcular intereses compartidos y trayectorias.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
@@ -44,7 +70,7 @@ export default function RecommendationPanel() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: '0.75rem', color: '#FFFFFF', fontWeight: 700 }}>Usuario objetivo:</span>
           <select
-            value={selectedUserId}
+            value={activeUserId}
             onChange={(e) => {
               setSelectedUserId(e.target.value);
               setRecommendedNodeId(null);

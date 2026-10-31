@@ -13,7 +13,7 @@ import UserNodeComponent from './UserNode';
 import VideoNodeComponent from './VideoNode';
 import CustomEdge from './CustomEdge';
 import { useGraph } from '../../context/GraphContext';
-import { Maximize2, LayoutGrid, RotateCcw } from 'lucide-react';
+import { Maximize2, LayoutGrid, RotateCcw, Layers, Sparkles } from 'lucide-react';
 
 const nodeTypes = {
   user: UserNodeComponent,
@@ -37,6 +37,8 @@ function FlowGraphInner({ height = 'clamp(440px, 62vh, 620px)', interactive = tr
     setSelectedNodeId,
     setSelectedEdgeId,
     openNodeInspector,
+    loadSampleStarterNetwork,
+    resetToOriginal,
   } = useGraph();
 
   const reactFlowInstance = useReactFlow();
@@ -153,6 +155,74 @@ function FlowGraphInner({ height = 'clamp(440px, 62vh, 620px)', interactive = tr
           />
         )}
       </ReactFlow>
+
+      {/* Empty State Overlay for Free Canvas / Scenario 6 */}
+      {flowNodes.length === 0 && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 15,
+            backgroundColor: 'rgba(9, 12, 18, 0.88)',
+            backdropFilter: 'blur(8px)',
+            padding: '1.5rem',
+          }}
+        >
+          <div
+            style={{
+              textAlign: 'center',
+              maxWidth: 480,
+              padding: '2rem 1.5rem',
+              borderRadius: 'var(--radius-lg)',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1.5px solid var(--border-red)',
+              boxShadow: 'var(--shadow-glass)',
+            }}
+          >
+            <div
+              style={{
+                width: 54,
+                height: 54,
+                borderRadius: '50%',
+                backgroundColor: 'rgba(254, 44, 85, 0.15)',
+                color: '#FE2C55',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 12,
+                border: '1px solid var(--border-red)',
+              }}
+            >
+              <Layers size={26} />
+            </div>
+            <h3 style={{ fontSize: '1.25rem', color: '#FFFFFF', marginBottom: 6 }}>
+              Lienzo Libre en Blanco
+            </h3>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '1.25rem' }}>
+              El grafo está listo para que crees tu propia red bipartita. Usa los botones <strong>+ Usuario</strong> y <strong>+ Video</strong> de la barra superior, o carga una plantilla inicial:
+            </p>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={loadSampleStarterNetwork}
+                className="btn btn-primary btn-sm"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px' }}
+              >
+                <Sparkles size={14} /> <span>Cargar plantilla inicial (2U + 3V)</span>
+              </button>
+              <button
+                onClick={resetToOriginal}
+                className="btn btn-secondary btn-sm"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 14px' }}
+              >
+                <RotateCcw size={14} /> <span>Restaurar red original (UMG)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Floating Canvas Controls Top Right */}
       <div

@@ -74,6 +74,33 @@ export default function RepetitiveConsumptionPanel() {
     ]);
   };
 
+  const isBaseScenario =
+    users.some((u) => u.id === 'A') &&
+    users.some((u) => u.id === 'C') &&
+    users.some((u) => u.id === 'D') &&
+    videos.some((v) => v.id === 'V3');
+
+  if (!isBaseScenario) {
+    return (
+      <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '0.75rem' }}>
+          <Layers size={20} color="#FE2C55" />
+          <h3 style={{ fontSize: '1.15rem', color: '#FFFFFF' }}>Simulador de Ciclos de Consumo</h3>
+        </div>
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '1rem' }}>
+          Este módulo interactivo de ciclos encadenados está formulado para la red base del proyecto ({'{A, B, C, D}'} y {'{V1…V5}'}). En tu red personalizada, puedes probar conexiones en tiempo real desde el lienzo interactivo.
+        </p>
+        <button
+          onClick={resetToOriginal}
+          className="btn btn-secondary btn-sm"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
+        >
+          <RotateCcw size={14} /> <span>Restaurar red base del proyecto (UMG)</span>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
       {/* Header */}

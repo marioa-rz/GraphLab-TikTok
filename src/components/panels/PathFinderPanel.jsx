@@ -17,13 +17,37 @@ export default function PathFinderPanel() {
   const [targetId, setTargetId] = useState('B');
   const [selectedPathIndex, setSelectedPathIndex] = useState(0);
 
+  const activeStartId = allNodes.some((n) => n.id === startId)
+    ? startId
+    : allNodes[0]?.id || '';
+  const activeTargetId = allNodes.some((n) => n.id === targetId)
+    ? targetId
+    : allNodes[1]?.id || allNodes[0]?.id || '';
+
   const searchResult = useMemo(() => {
-    return findShortestPath(startId, targetId, users, videos, edges);
-  }, [startId, targetId, users, videos, edges]);
+    if (!activeStartId || !activeTargetId) {
+      return { found: false, message: 'Se requieren vértices en la red para calcular caminos.' };
+    }
+    return findShortestPath(activeStartId, activeTargetId, users, videos, edges);
+  }, [activeStartId, activeTargetId, users, videos, edges]);
 
   const handleApplyHighlight = (pathArray) => {
     setHighlightedPath(pathArray);
   };
+
+  if (allNodes.length < 2) {
+    return (
+      <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '0.75rem' }}>
+          <Route size={20} color="#FE2C55" />
+          <h3 style={{ fontSize: '1.15rem', color: '#FFFFFF' }}>Análisis de Trayectorias (BFS)</h3>
+        </div>
+        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+          Se requieren al menos 2 vértices (usuarios o videos) en el grafo para calcular trayectorias y caminos mínimos con el algoritmo BFS. Agrega elementos al lienzo con los botones superiores para comenzar.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
@@ -53,7 +77,7 @@ export default function PathFinderPanel() {
             Vértice Origen:
           </label>
           <select
-            value={startId}
+            value={activeStartId}
             onChange={(e) => {
               setStartId(e.target.value);
               setSelectedPathIndex(0);
@@ -73,7 +97,7 @@ export default function PathFinderPanel() {
             Vértice Destino:
           </label>
           <select
-            value={targetId}
+            value={activeTargetId}
             onChange={(e) => {
               setTargetId(e.target.value);
               setSelectedPathIndex(0);
@@ -89,45 +113,51 @@ export default function PathFinderPanel() {
         </div>
       </div>
 
-      {/* Preset Quick Tests Buttons */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: '1rem' }}>
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', alignSelf: 'center', marginRight: 4 }}>
-          Pruebas rápidas:
-        </span>
-        <button
-          onClick={() => {
-            setStartId('A');
-            setTargetId('B');
-            setSelectedPathIndex(0);
-          }}
-          className="btn btn-secondary btn-sm"
-          style={{ fontSize: '0.75rem', padding: '3px 8px' }}
-        >
-          A → B (Interés común)
-        </button>
-        <button
-          onClick={() => {
-            setStartId('A');
-            setTargetId('V3');
-            setSelectedPathIndex(0);
-          }}
-          className="btn btn-secondary btn-sm"
-          style={{ fontSize: '0.75rem', padding: '3px 8px' }}
-        >
-          A → V3 (Recomendación)
-        </button>
-        <button
-          onClick={() => {
-            setStartId('A');
-            setTargetId('D');
-            setSelectedPathIndex(0);
-          }}
-          className="btn btn-secondary btn-sm"
-          style={{ fontSize: '0.75rem', padding: '3px 8px' }}
-        >
-          A → D (Distancia 4)
-        </button>
-      </div>
+      {/* Preset Quick Tests Buttons (if base nodes exist) */}
+      {allNodes.some((n) => n.id === 'A') && allNodes.some((n) => n.id === 'B') && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: '1rem' }}>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', alignSelf: 'center', marginRight: 4 }}>
+            Pruebas del informe:
+          </span>
+          <button
+            onClick={() => {
+              setStartId('A');
+              setTargetId('B');
+              setSelectedPathIndex(0);
+            }}
+            className="btn btn-secondary btn-sm"
+            style={{ fontSize: '0.75rem', padding: '3px 8px' }}
+          >
+            A → B (Interés común)
+          </button>
+          {allNodes.some((n) => n.id === 'V3') && (
+            <button
+              onClick={() => {
+                setStartId('A');
+                setTargetId('V3');
+                setSelectedPathIndex(0);
+              }}
+              className="btn btn-secondary btn-sm"
+              style={{ fontSize: '0.75rem', padding: '3px 8px' }}
+            >
+              A → V3 (Recomendación)
+            </button>
+          )}
+          {allNodes.some((n) => n.id === 'D') && (
+            <button
+              onClick={() => {
+                setStartId('A');
+                setTargetId('D');
+                setSelectedPathIndex(0);
+              }}
+              className="btn btn-secondary btn-sm"
+              style={{ fontSize: '0.75rem', padding: '3px 8px' }}
+            >
+              A → D (Distancia 4)
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Result Display */}
       {searchResult.found ? (

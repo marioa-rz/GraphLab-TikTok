@@ -38,6 +38,7 @@ function AppContent() {
       <ScenarioManagerModal
         isOpen={isScenarioModalOpen}
         onClose={() => setIsScenarioModalOpen(false)}
+        setActiveView={setActiveView}
       />
       <Toast />
     </div>

@@ -185,6 +185,41 @@ export default function HomeView({ setActiveView }) {
         </div>
       </div>
 
+      {/* Free Canvas Scenario Active Alert */}
+      {users.length === 0 && videos.length === 0 && (
+        <div
+          style={{
+            backgroundColor: 'rgba(225, 29, 72, 0.12)',
+            border: '1.5px solid var(--border-red)',
+            padding: '1rem 1.25rem',
+            borderRadius: 'var(--radius-md)',
+            marginBottom: '2rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 12,
+          }}
+        >
+          <div>
+            <strong style={{ color: '#FFFFFF', fontSize: '0.95rem' }}>
+              🎨 Estás en el Escenario 6: Crear mi propia red (Lienzo libre)
+            </strong>
+            <p style={{ fontSize: '0.82rem', color: '#CBD5E1', margin: '3px 0 0 0' }}>
+              El grafo está en blanco para que lo diseñes. Abre el Laboratorio Interactivo para agregar usuarios, videos y conexiones con las herramientas de edición.
+            </p>
+          </div>
+          <button
+            onClick={() => setActiveView('lab')}
+            className="btn btn-primary btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+          >
+            <span>Ir al Laboratorio</span>
+            <ArrowRight size={14} />
+          </button>
+        </div>
+      )}
+
       {/* Quick Metrics Bar in Red & White */}
       <div
         style={{

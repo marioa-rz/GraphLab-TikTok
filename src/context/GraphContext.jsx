@@ -379,7 +379,36 @@ export function GraphProvider({ children }) {
     setHighlightedPath([]);
     setRecommendedNodeId(null);
     setLastDiff(null);
-    showToast('Grafo vaciado. Listo para experimentar desde cero.', 'info');
+    showToast('Lienzo libre vaciado. Puedes agregar usuarios y videos.', 'info');
+  }, [pushHistorySnapshot, showToast]);
+
+  // Cargar plantilla rápida para el lienzo libre
+  const loadSampleStarterNetwork = useCallback(() => {
+    pushHistorySnapshot();
+    const sampleUsers = [
+      { id: 'U1', name: 'Usuario 1', type: 'user', position: { x: 100, y: 120 } },
+      { id: 'U2', name: 'Usuario 2', type: 'user', position: { x: 100, y: 260 } },
+    ];
+    const sampleVideos = [
+      { id: 'V1', name: 'V1', title: 'Video Gamer', category: 'Gaming', type: 'video', position: { x: 500, y: 100 } },
+      { id: 'V2', name: 'V2', title: 'Receta Fácil', category: 'Cocina', type: 'video', position: { x: 500, y: 240 } },
+      { id: 'V3', name: 'V3', title: 'Baile Viral', category: 'Baile', type: 'video', position: { x: 500, y: 380 } },
+    ];
+    const sampleEdges = [
+      { id: 'e-U1-V1', source: 'U1', target: 'V1', isInitial: true },
+      { id: 'e-U2-V1', source: 'U2', target: 'V1', isInitial: true },
+      { id: 'e-U2-V2', source: 'U2', target: 'V2', isInitial: true },
+    ];
+    setUsers(sampleUsers);
+    setVideos(sampleVideos);
+    setEdges(sampleEdges);
+    setCurrentScenarioId('empty_sandbox');
+    setSelectedNodeId(null);
+    setSelectedEdgeId(null);
+    setHighlightedPath([]);
+    setRecommendedNodeId(null);
+    setLastDiff(null);
+    showToast('Plantilla básica cargada (2 usuarios, 3 videos). ¡Ahora puedes personalizarla!', 'success');
   }, [pushHistorySnapshot, showToast]);
 
   // Reorganizar visualmente en columnas bipartitas limpias
@@ -506,6 +535,7 @@ export function GraphProvider({ children }) {
         loadScenario,
         resetToOriginal,
         clearGraph,
+        loadSampleStarterNetwork,
         resetNodeDistribution,
         updateNodePosition,
         exportToJson,
