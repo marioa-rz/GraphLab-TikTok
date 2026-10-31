@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useGraph } from '../../context/GraphContext';
 import { findShortestPath } from '../../math/graphLogic';
-import { Route, Play, Check, AlertCircle, ArrowRight, CornerDownRight } from 'lucide-react';
+import { Route, Play, AlertCircle, ArrowRight } from 'lucide-react';
 
 export default function PathFinderPanel() {
-  const { users, videos, edges, setHighlightedPath, highlightedPath } = useGraph();
+  const { users, videos, edges, setHighlightedPath } = useGraph();
 
   const allNodes = useMemo(() => {
     return [
@@ -26,15 +26,15 @@ export default function PathFinderPanel() {
   };
 
   return (
-    <div className="card" style={{ padding: '1.25rem' }}>
+    <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <div>
           <h3 style={{ fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Route size={20} color="#A855F7" />
-            Análisis de Trayectorias y Caminos Mínimos (BFS)
+            <Route size={20} color="#FE2C55" />
+            <span>Análisis de Trayectorias y Caminos Mínimos (BFS)</span>
           </h3>
           <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: 2 }}>
-            Determina la distancia geodésica y las conexiones intermedias utilizando Búsqueda en Anchura.
+            Determina la distancia geodésica y los nodos intermediarios usando Búsqueda en Anchura.
           </p>
         </div>
       </div>
@@ -49,7 +49,7 @@ export default function PathFinderPanel() {
         }}
       >
         <div>
-          <label style={{ display: 'block', fontSize: '0.75rem', color: '#22D3EE', fontWeight: 600, marginBottom: 4 }}>
+          <label style={{ display: 'block', fontSize: '0.75rem', color: '#FFFFFF', fontWeight: 700, marginBottom: 4 }}>
             Vértice Origen:
           </label>
           <select
@@ -69,7 +69,7 @@ export default function PathFinderPanel() {
         </div>
 
         <div>
-          <label style={{ display: 'block', fontSize: '0.75rem', color: '#F472B6', fontWeight: 600, marginBottom: 4 }}>
+          <label style={{ display: 'block', fontSize: '0.75rem', color: '#FE2C55', fontWeight: 700, marginBottom: 4 }}>
             Vértice Destino:
           </label>
           <select
@@ -133,38 +133,34 @@ export default function PathFinderPanel() {
       {searchResult.found ? (
         <div
           style={{
-            backgroundColor: 'rgba(168, 85, 247, 0.08)',
-            border: '1px solid rgba(168, 85, 247, 0.35)',
+            backgroundColor: 'rgba(250, 204, 21, 0.08)',
+            border: '1px solid rgba(250, 204, 21, 0.35)',
             borderRadius: 'var(--radius-md)',
             padding: '1rem',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span className="badge badge-purple">
+              <span className="badge badge-amber">
                 Longitud mínima: {searchResult.length} {searchResult.length === 1 ? 'arista' : 'aristas'}
               </span>
               {searchResult.allShortestPaths.length > 1 && (
-                <span className="badge badge-amber">
-                  {searchResult.allShortestPaths.length} caminos alternativos de igual longitud
+                <span className="badge badge-white">
+                  {searchResult.allShortestPaths.length} caminos alternativos
                 </span>
               )}
             </div>
 
             <button
               onClick={() => handleApplyHighlight(searchResult.allShortestPaths[selectedPathIndex] || searchResult.path)}
-              className="btn btn-sm btn-accent"
-              style={{
-                background: 'linear-gradient(135deg, #9333ea 0%, #a855f7 100%)',
-                padding: '4px 10px',
-                fontSize: '0.75rem',
-              }}
+              className="btn btn-sm btn-primary"
+              style={{ padding: '4px 10px', fontSize: '0.75rem' }}
             >
               <Play size={12} fill="white" /> Resaltar en Grafo
             </button>
           </div>
 
-          {/* Paths List if multiple shortest paths exist (like A -> V1 -> B and A -> V2 -> B) */}
+          {/* Paths List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: '0.75rem' }}>
             {searchResult.allShortestPaths.map((p, idx) => {
               const isCurrent = idx === selectedPathIndex;
@@ -181,30 +177,30 @@ export default function PathFinderPanel() {
                     justifyContent: 'space-between',
                     padding: '8px 12px',
                     borderRadius: 'var(--radius-sm)',
-                    backgroundColor: isCurrent ? 'rgba(168, 85, 247, 0.2)' : 'var(--bg-surface)',
-                    border: isCurrent ? '1px solid #A855F7' : '1px solid var(--border-subtle)',
+                    backgroundColor: isCurrent ? 'rgba(250, 204, 21, 0.18)' : 'var(--bg-surface)',
+                    border: isCurrent ? '1.5px solid #FACC15' : '1px solid var(--border-subtle)',
                     cursor: 'pointer',
                     transition: 'all 0.15s',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'Fira Code', fontSize: '0.9rem' }}>
-                    <span style={{ color: '#A855F7', fontWeight: 700 }}>Camino {idx + 1}:</span>
+                    <span style={{ color: '#FACC15', fontWeight: 800 }}>Camino {idx + 1}:</span>
                     {p.map((nodeId, nIdx) => (
                       <React.Fragment key={nIdx}>
                         <span
                           style={{
-                            color: nodeId.startsWith('V') ? '#F472B6' : '#22D3EE',
-                            fontWeight: 700,
+                            color: nodeId.startsWith('V') ? '#FE2C55' : '#FFFFFF',
+                            fontWeight: 800,
                           }}
                         >
                           {nodeId}
                         </span>
-                        {nIdx < p.length - 1 && <ArrowRight size={14} color="#94A3B8" />}
+                        {nIdx < p.length - 1 && <ArrowRight size={14} color="#64748B" />}
                       </React.Fragment>
                     ))}
                   </div>
 
-                  <span style={{ fontSize: '0.75rem', color: isCurrent ? '#E2E8F0' : 'var(--text-muted)' }}>
+                  <span style={{ fontSize: '0.72rem', color: isCurrent ? '#FFFFFF' : 'var(--text-muted)' }}>
                     {isCurrent ? 'Activo en el lienzo' : 'Clic para ver'}
                   </span>
                 </div>
@@ -216,13 +212,13 @@ export default function PathFinderPanel() {
           <div style={{ fontSize: '0.8125rem', color: '#E2E8F0', lineHeight: 1.45 }}>
             {startId === 'A' && targetId === 'B' && (
               <p>
-                <strong style={{ color: '#A855F7' }}>Interpretación académica:</strong> Los usuarios A y B no están unidos directamente (lo que violaría el modelo bipartito), pero tienen <strong>dos caminos de longitud 2</strong> ({' '}
-                <code style={{ color: '#38BDF8' }}>A → V1 → B</code> y <code style={{ color: '#38BDF8' }}>A → V2 → B</code>). Esto demuestra matemáticamente que comparten exactamente dos intereses en común, habilitando la base para las recomendaciones.
+                <strong style={{ color: '#FACC15' }}>Interpretación académica:</strong> Los usuarios A y B no están unidos directamente (lo que violaría el modelo bipartito), pero tienen <strong>dos caminos de longitud 2</strong> ({' '}
+                <code style={{ color: '#FFFFFF' }}>A → V1 → B</code> y <code style={{ color: '#FFFFFF' }}>A → V2 → B</code>). Esto demuestra formalmente que comparten dos intereses en común.
               </p>
             )}
             {startId === 'A' && targetId === 'V3' && (
               <p>
-                <strong style={{ color: '#A855F7' }}>Interpretación académica:</strong> El camino <code style={{ color: '#38BDF8' }}>A → V1 → B → V3</code> tiene longitud 3. Representa la justificación estructural de la recomendación: A vio V1, B también vio V1 y además vio V3.
+                <strong style={{ color: '#FE2C55' }}>Interpretación académica:</strong> El camino <code style={{ color: '#FFFFFF' }}>A → V1 → B → V3</code> tiene longitud 3. Representa la justificación estructural de la recomendación: A vio V1, B también vio V1 y además vio V3.
               </p>
             )}
           </div>
@@ -241,7 +237,7 @@ export default function PathFinderPanel() {
         >
           <AlertCircle size={20} color="#EF4444" style={{ flexShrink: 0, marginTop: 2 }} />
           <div>
-            <div style={{ fontWeight: 700, color: '#EF4444', fontSize: '0.875rem' }}>
+            <div style={{ fontWeight: 800, color: '#EF4444', fontSize: '0.875rem' }}>
               No existe trayectoria disponible
             </div>
             <div style={{ fontSize: '0.8125rem', color: '#CBD5E1', marginTop: 2 }}>

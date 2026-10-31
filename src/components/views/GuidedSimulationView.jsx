@@ -5,15 +5,14 @@ import {
   ChevronLeft,
   ChevronRight,
   RotateCcw,
-  Sparkles,
-  CheckCircle2,
   Users,
-  Video,
   Share2,
   Calculator,
   Compass,
   Heart,
   TrendingUp,
+  Sparkles,
+  CheckCircle2,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -39,8 +38,8 @@ export default function GuidedSimulationView({ setActiveView }) {
       title: '1. Conocer los usuarios y videos',
       badge: 'Vértices W = U ∪ V',
       icon: Users,
-      color: '#22D3EE',
-      text: 'Representamos el sistema como un conjunto de vértices dividido en dos particiones disjuntas: el conjunto U de usuarios {A, B, C, D} y el conjunto V de videos temáticos {V1, V2, V3, V4, V5}. En este modelo matemático simplificado, los usuarios están a la izquierda y los videos a la derecha.',
+      color: '#FFFFFF',
+      text: 'Representamos el sistema como un conjunto de 9 vértices dividido en dos particiones disjuntas: el conjunto U de usuarios {A, B, C, D} (en blanco, izquierda) y el conjunto V de videos temáticos {V1 a V5} (en rojo carmín, derecha). En un grafo bipartito, nunca existen relaciones entre elementos del mismo grupo.',
       action: () => {
         setSelectedNodeId(null);
         setHighlightedPath([]);
@@ -52,8 +51,8 @@ export default function GuidedSimulationView({ setActiveView }) {
       title: '2. Visualizar sus conexiones',
       badge: 'Conjunto de Aristas E',
       icon: Share2,
-      color: '#38BDF8',
-      text: 'Cada interacción de «Me gusta» se modela como una arista no dirigida e = {u, v}. Contamos con 9 aristas iniciales: (A,V1), (A,V2), (B,V1), (B,V2), (B,V3), (C,V3), (C,V4), (D,V4), (D,V5). El grafo es bipartito simple: nunca une dos personas entre sí ni dos videos entre sí.',
+      color: '#FE2C55',
+      text: 'Cada interacción de «Me gusta» se modela como una arista no dirigida e = {u, v}. Contamos con 9 aristas iniciales: (A,V1), (A,V2), (B,V1), (B,V2), (B,V3), (C,V3), (C,V4), (D,V4), (D,V5). Es un grafo simple y bipartito: no hay líneas repetidas ni lazos.',
       action: () => {
         setSelectedNodeId(null);
         setHighlightedPath([]);
@@ -65,8 +64,8 @@ export default function GuidedSimulationView({ setActiveView }) {
       title: '3. Calcular los grados de los vértices',
       badge: 'Grado deg(v)',
       icon: TrendingUp,
-      color: '#F472B6',
-      text: 'El grado deg(v) es cuántas líneas salen de cada punto. En usuarios: A=2, B=3, C=2, D=2 (el usuario B tiene la mayor cantidad de interacciones). En videos: V1=2, V2=2, V3=2, V4=2, V5=1 (V5 tiene menos interacciones, lo que significa que el sistema dispone de menos información para asociarlo).',
+      color: '#FFFFFF',
+      text: 'El grado deg(v) mide cuántas conexiones directas tiene un nodo. En usuarios: A=2, B=3, C=2, D=2 (el usuario B tiene el mayor grado en la partición U). En videos: V1=2, V2=2, V3=2, V4=2, V5=1 (V5 tiene la menor conectividad).',
       action: () => {
         setSelectedNodeId('B');
         setHighlightedPath([]);
@@ -76,15 +75,15 @@ export default function GuidedSimulationView({ setActiveView }) {
     {
       step: 4,
       title: '4. Comprobar el lema del apretón de manos',
-      badge: 'Σ deg(v) = 2 · |E|',
+      badge: '∑ deg(v) = 2 · |E|',
       icon: Calculator,
-      color: '#22C55E',
-      text: 'Al sumar todos los grados de los usuarios (2 + 3 + 2 + 2 = 9) y de los videos (2 + 2 + 2 + 2 + 1 = 9), obtenemos una suma total de 18. Como tenemos 9 aristas, 18 = 2 × 9. La igualdad se cumple exactamente porque cada arista tiene dos extremos y se cuenta dos veces.',
+      color: '#10B981',
+      text: 'Al sumar los grados de los usuarios (2 + 3 + 2 + 2 = 9) y de los videos (2 + 2 + 2 + 2 + 1 = 9), obtenemos 18. Al duplicar las 9 aristas tenemos 2 × 9 = 18. La igualdad se cumple estrictamente porque cada arista tiene dos extremos y se cuenta dos veces.',
       action: () => {
         setSelectedNodeId(null);
         setHighlightedPath([]);
         setRecommendedNodeId(null);
-        confetti({ particleCount: 30, spread: 45, origin: { y: 0.8 } });
+        confetti({ particleCount: 40, spread: 50, origin: { y: 0.8 }, colors: ['#FE2C55', '#FFFFFF', '#10B981'] });
       },
     },
     {
@@ -92,8 +91,8 @@ export default function GuidedSimulationView({ setActiveView }) {
       title: '5. Encontrar trayectorias compartidas',
       badge: 'Trayectorias de longitud 2',
       icon: Compass,
-      color: '#A855F7',
-      text: 'Una trayectoria es un camino que une vértices. Los usuarios A y B no están unidos directamente, pero comparten dos trayectorias de longitud 2: A → V1 → B y A → V2 → B. Esto demuestra formalmente que ambos interactuaron con los mismos dos videos y por tanto tienen gustos afines.',
+      color: '#FACC15',
+      text: 'Una trayectoria es un camino para recorrer el grafo. Los usuarios A y B no están conectados directamente, pero comparten dos caminos de longitud 2: A → V1 → B y A → V2 → B. Esto demuestra matemáticamente que comparten dos gustos idénticos.',
       action: () => {
         setSelectedNodeId(null);
         setHighlightedPath(['A', 'V1', 'B']);
@@ -105,8 +104,8 @@ export default function GuidedSimulationView({ setActiveView }) {
       title: '6. Generar una recomendación',
       badge: 'Trayectoria de longitud 3',
       icon: Sparkles,
-      color: '#EC4899',
-      text: 'Como A y B comparten intereses y B ya interactuó con V3 («Mascotas graciosas») mientras que A todavía no, el sistema sugiere V3 al usuario A. La trayectoria que justifica la recomendación es A → V1 → B → V3 (longitud 3).',
+      color: '#FE2C55',
+      text: 'Como A y B son usuarios afines y B ya interactuó con V3 («Mascotas graciosas») mientras que A todavía no lo ha visto, el sistema recomienda V3 al usuario A. La trayectoria que justifica la sugerencia es A → V1 → B → V3 (longitud 3).',
       action: () => {
         setSelectedNodeId(null);
         setRecommendedNodeId('V3');
@@ -118,8 +117,8 @@ export default function GuidedSimulationView({ setActiveView }) {
       title: '7. Agregar una nueva interacción',
       badge: 'Simulación (A, V3)',
       icon: Heart,
-      color: '#EF4444',
-      text: 'Simulamos el momento en que el usuario A acepta la recomendación y marca «Me gusta» al video V3. Esto crea la nueva arista (A, V3), transformando la topología de la red social.',
+      color: '#E11D48',
+      text: 'Simulamos el momento en que el usuario A acepta la recomendación y marca «Me gusta» a V3. Esto añade la arista (A, V3), transformando la estructura topológica de la red.',
       action: () => {
         simulateLike('A', 'V3');
       },
@@ -129,18 +128,17 @@ export default function GuidedSimulationView({ setActiveView }) {
       title: '8. Observar cómo cambia el grafo',
       badge: 'Evolución y Consumo Continuo',
       icon: CheckCircle2,
-      color: '#22C55E',
-      text: 'El grafo se actualizó en vivo: el grado de A aumentó de 2 a 3, el grado de V3 aumentó de 2 a 3, las aristas pasaron de 9 a 10 y la suma de grados pasó de 18 a 20 (20 = 2 × 10). Una nueva interacción proporciona datos adicionales para recomendaciones futuras, explicando el bucle de retroalimentación.',
+      color: '#10B981',
+      text: 'El grafo se actualiza en vivo: deg(A) aumenta a 3, deg(V3) aumenta a 3, las aristas pasan a 10 y la suma de grados a 20 (20 = 2 × 10). La nueva interacción proporciona datos adicionales para sugerir más videos en el futuro.',
       action: () => {
         setSelectedNodeId(null);
         setHighlightedPath(['A', 'V3']);
         setRecommendedNodeId(null);
-        confetti({ particleCount: 50, spread: 70, origin: { y: 0.7 } });
+        confetti({ particleCount: 55, spread: 70, origin: { y: 0.7 }, colors: ['#FE2C55', '#FFFFFF', '#10B981'] });
       },
     },
   ];
 
-  // Aplicar acción del paso cuando cambia
   useEffect(() => {
     const currentObj = STEPS[currentStep - 1];
     if (currentObj && currentObj.action) {
@@ -169,7 +167,7 @@ export default function GuidedSimulationView({ setActiveView }) {
   const StepIcon = activeStepData.icon;
 
   return (
-    <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '1.5rem 1.25rem' }}>
+    <div style={{ maxWidth: '1540px', margin: '0 auto', padding: '1.5rem 1.25rem' }}>
       {/* Top Banner / Progress Indicator */}
       <div
         style={{
@@ -183,7 +181,7 @@ export default function GuidedSimulationView({ setActiveView }) {
       >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span className="badge badge-cyan">Modo Exposición Paso a Paso</span>
+            <span className="badge badge-red">Modo Exposición Paso a Paso</span>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
               Paso {currentStep} de {STEPS.length}
             </span>
@@ -218,7 +216,7 @@ export default function GuidedSimulationView({ setActiveView }) {
           <button
             onClick={handleRestart}
             className="btn btn-ghost btn-sm"
-            style={{ padding: '6px 10px', color: '#F472B6' }}
+            style={{ padding: '6px 10px', color: '#FE2C55' }}
             title="Reiniciar presentación desde el paso 1"
           >
             <RotateCcw size={14} />
@@ -246,11 +244,11 @@ export default function GuidedSimulationView({ setActiveView }) {
               style={{
                 height: 8,
                 borderRadius: 'var(--radius-full)',
-                backgroundColor: isCurrent ? s.color : isDone ? '#22C55E' : 'var(--border-subtle)',
+                backgroundColor: isCurrent ? '#FE2C55' : isDone ? '#10B981' : 'var(--border-subtle)',
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
-                boxShadow: isCurrent ? `0 0 10px ${s.color}` : 'none',
+                boxShadow: isCurrent ? '0 0 10px #FE2C55' : 'none',
               }}
               title={s.title}
             />
@@ -268,24 +266,25 @@ export default function GuidedSimulationView({ setActiveView }) {
         }}
       >
         {/* Explanation Card */}
-        <div className="card" style={{ padding: '1.5rem' }}>
+        <div className="card" style={{ padding: '1.75rem', border: '1px solid var(--border-subtle)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '1rem' }}>
             <div
               style={{
                 width: 44,
                 height: 44,
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: `${activeStepData.color}15`,
-                color: activeStepData.color,
+                backgroundColor: 'rgba(225, 29, 72, 0.12)',
+                color: '#FE2C55',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                border: '1px solid var(--border-red)',
               }}
             >
               <StepIcon size={24} />
             </div>
             <div>
-              <span className="badge badge-purple" style={{ fontSize: '0.7rem' }}>
+              <span className="badge badge-white" style={{ fontSize: '0.7rem' }}>
                 {activeStepData.badge}
               </span>
               <h3 style={{ fontSize: '1.25rem', color: '#FFFFFF', marginTop: 2 }}>
@@ -312,42 +311,44 @@ export default function GuidedSimulationView({ setActiveView }) {
                 backgroundColor: 'var(--bg-surface-card)',
                 padding: '0.875rem',
                 borderRadius: 'var(--radius-md)',
-                fontSize: '0.8125rem',
+                fontSize: '0.85rem',
                 marginBottom: '1rem',
+                border: '1px solid var(--border-subtle)',
               }}
             >
-              <strong style={{ color: '#22D3EE' }}>Usuarios:</strong> A=2, B=3, C=2, D=2 (Suma = 9)<br />
-              <strong style={{ color: '#F472B6' }}>Videos:</strong> V1=2, V2=2, V3=2, V4=2, V5=1 (Suma = 9)
+              <strong style={{ color: '#FFFFFF' }}>Usuarios:</strong> A=2, B=3, C=2, D=2 (Suma = 9)<br />
+              <strong style={{ color: '#FE2C55' }}>Videos:</strong> V1=2, V2=2, V3=2, V4=2, V5=1 (Suma = 9)
             </div>
           )}
 
           {currentStep === 4 && (
             <div
               style={{
-                backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                border: '1px solid #22C55E',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                border: '1.5px solid #10B981',
                 padding: '0.875rem',
                 borderRadius: 'var(--radius-md)',
-                fontSize: '0.85rem',
+                fontSize: '0.9rem',
                 fontFamily: 'Fira Code',
-                color: '#86EFAC',
+                color: '#10B981',
+                fontWeight: 700,
                 marginBottom: '1rem',
               }}
             >
-              Σ deg(v) = 18 = 2 × 9 = 2 · |E| (¡Comprobado!)
+              ∑ deg(v) = 18 = 2 × 9 = 2 · |E| (¡Comprobado!)
             </div>
           )}
 
           {currentStep === 5 && (
             <div
               style={{
-                backgroundColor: 'rgba(168, 85, 247, 0.1)',
-                border: '1px solid #A855F7',
+                backgroundColor: 'rgba(250, 204, 21, 0.1)',
+                border: '1.5px solid #FACC15',
                 padding: '0.875rem',
                 borderRadius: 'var(--radius-md)',
-                fontSize: '0.85rem',
+                fontSize: '0.88rem',
                 fontFamily: 'Fira Code',
-                color: '#D8B4FE',
+                color: '#FACC15',
                 marginBottom: '1rem',
               }}
             >
@@ -359,13 +360,14 @@ export default function GuidedSimulationView({ setActiveView }) {
           {currentStep === 6 && (
             <div
               style={{
-                backgroundColor: 'rgba(236, 72, 153, 0.1)',
-                border: '1px solid #EC4899',
+                backgroundColor: 'rgba(225, 29, 72, 0.1)',
+                border: '1.5px solid #FE2C55',
                 padding: '0.875rem',
                 borderRadius: 'var(--radius-md)',
-                fontSize: '0.85rem',
+                fontSize: '0.88rem',
                 fontFamily: 'Fira Code',
-                color: '#F472B6',
+                color: '#FE2C55',
+                fontWeight: 700,
                 marginBottom: '1rem',
               }}
             >
@@ -376,12 +378,13 @@ export default function GuidedSimulationView({ setActiveView }) {
           {currentStep === 7 && (
             <div
               style={{
-                backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                border: '1px solid #22C55E',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                border: '1.5px solid #10B981',
                 padding: '0.875rem',
                 borderRadius: 'var(--radius-md)',
-                fontSize: '0.85rem',
-                color: '#86EFAC',
+                fontSize: '0.88rem',
+                color: '#10B981',
+                fontWeight: 700,
                 marginBottom: '1rem',
               }}
             >
@@ -392,17 +395,17 @@ export default function GuidedSimulationView({ setActiveView }) {
           {currentStep === 8 && (
             <div
               style={{
-                backgroundColor: 'rgba(34, 211, 238, 0.1)',
-                border: '1px solid #22D3EE',
+                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                border: '1.5px solid #FFFFFF',
                 padding: '0.875rem',
                 borderRadius: 'var(--radius-md)',
-                fontSize: '0.85rem',
-                color: '#E2E8F0',
+                fontSize: '0.88rem',
+                color: '#FFFFFF',
                 marginBottom: '1rem',
               }}
             >
               Antes: 9 aristas, suma de grados 18.<br />
-              Después: <strong>10 aristas, suma de grados 20 (20 = 2 × 10)</strong>.
+              Después: <strong style={{ color: '#10B981' }}>10 aristas, suma de grados 20 (20 = 2 × 10)</strong>.
             </div>
           )}
 

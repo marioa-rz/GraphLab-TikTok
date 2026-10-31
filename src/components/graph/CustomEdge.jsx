@@ -15,7 +15,6 @@ export default function CustomEdge({
   targetPosition,
   style = {},
   data,
-  markerEnd,
 }) {
   const {
     selectedEdgeId,
@@ -39,25 +38,25 @@ export default function CustomEdge({
   const isInPath = highlightedEdgeIds.has(id);
   const isNew = data?.isNew;
 
-  // Determinar color y estilo dinámico
-  let strokeColor = '#475569';
+  // Colores dinámicos Red & White
+  let strokeColor = 'rgba(255, 255, 255, 0.22)';
   let strokeWidth = 2;
   let strokeDasharray = 'none';
   let animationClass = '';
 
   if (isInPath) {
-    strokeColor = '#A855F7';
+    strokeColor = '#FACC15';
     strokeWidth = 4.5;
     strokeDasharray = '6, 6';
     animationClass = 'edge-flow-animation';
   } else if (isNew) {
-    strokeColor = '#22C55E';
+    strokeColor = '#10B981';
     strokeWidth = 3.5;
   } else if (isSelected) {
-    strokeColor = '#38BDF8';
+    strokeColor = '#FE2C55';
     strokeWidth = 3.5;
   } else if (isConnectedToFocus) {
-    strokeColor = '#38BDF8';
+    strokeColor = '#FE2C55';
     strokeWidth = 3;
   }
 
@@ -82,7 +81,7 @@ export default function CustomEdge({
         d={edgePath}
         fill="none"
         stroke="transparent"
-        strokeWidth={20}
+        strokeWidth={22}
         style={{ cursor: 'pointer' }}
         onClick={(e) => {
           e.stopPropagation();
@@ -103,11 +102,11 @@ export default function CustomEdge({
           ...style,
           transition: 'stroke 0.2s, stroke-width 0.2s',
           filter: isInPath
-            ? 'drop-shadow(0 0 8px rgba(168, 85, 247, 0.8))'
+            ? 'drop-shadow(0 0 10px rgba(250, 204, 21, 0.9))'
             : isNew
-            ? 'drop-shadow(0 0 8px rgba(34, 197, 94, 0.8))'
+            ? 'drop-shadow(0 0 10px rgba(16, 185, 129, 0.85))'
             : isConnectedToFocus
-            ? 'drop-shadow(0 0 6px rgba(56, 189, 248, 0.6))'
+            ? 'drop-shadow(0 0 8px rgba(254, 44, 85, 0.75))'
             : 'none',
         }}
       />
@@ -129,17 +128,17 @@ export default function CustomEdge({
                 removeEdge(id);
               }}
               style={{
-                width: 24,
-                height: 24,
+                width: 26,
+                height: 26,
                 borderRadius: '50%',
-                backgroundColor: '#EF4444',
-                color: 'white',
-                border: '2px solid #0B0F19',
+                backgroundColor: '#DC2626',
+                color: '#FFFFFF',
+                border: '2px solid #FFFFFF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.6)',
+                boxShadow: '0 3px 8px rgba(0,0,0,0.6)',
               }}
               title={`Eliminar arista (${source}, ${target})`}
             >

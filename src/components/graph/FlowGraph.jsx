@@ -1,12 +1,9 @@
-import React, { useMemo, useCallback, useRef } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import {
   ReactFlow,
   Controls,
   Background,
   MiniMap,
-  useNodesState,
-  useEdgesState,
-  addEdge as reactFlowAddEdge,
   ReactFlowProvider,
   useReactFlow,
 } from '@xyflow/react';
@@ -16,7 +13,7 @@ import UserNodeComponent from './UserNode';
 import VideoNodeComponent from './VideoNode';
 import CustomEdge from './CustomEdge';
 import { useGraph } from '../../context/GraphContext';
-import { Maximize2, LayoutGrid, RotateCcw, Info, Sparkles } from 'lucide-react';
+import { Maximize2, LayoutGrid, RotateCcw, Sparkles } from 'lucide-react';
 
 const nodeTypes = {
   user: UserNodeComponent,
@@ -75,7 +72,7 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
     }));
   }, [edges]);
 
-  // Manejar creación de conexión arrastrando entre conectores
+  // Manejar creación de conexión arrastrando
   const onConnect = useCallback(
     (params) => {
       if (!interactive) return;
@@ -94,7 +91,7 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
 
   // Centrar visualización
   const handleFitView = useCallback(() => {
-    reactFlowInstance.fitView({ padding: 0.2, duration: 400 });
+    reactFlowInstance.fitView({ padding: 0.22, duration: 400 });
   }, [reactFlowInstance]);
 
   // Limpiar selecciones
@@ -114,7 +111,8 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
         borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
         border: '1px solid var(--border-medium)',
-        backgroundColor: '#0D1220',
+        backgroundColor: '#090C12',
+        boxShadow: 'var(--shadow-glass)',
       }}
     >
       <ReactFlow
@@ -125,13 +123,13 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
         onConnect={onConnect}
         onNodeDragStop={onNodeDragStop}
         fitView
-        fitViewOptions={{ padding: 0.2 }}
+        fitViewOptions={{ padding: 0.22 }}
         minZoom={0.3}
         maxZoom={2.2}
         proOptions={{ hideAttribution: true }}
         onPaneClick={handleClearSelection}
       >
-        <Background color="#1F293D" gap={20} size={1.5} />
+        <Background color="rgba(255, 255, 255, 0.05)" gap={22} size={1.2} />
         <Controls
           showInteractive={false}
           style={{
@@ -142,12 +140,12 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
         />
         {showMiniMap && (
           <MiniMap
-            nodeColor={(node) => (node.type === 'user' ? '#22D3EE' : '#F472B6')}
-            maskColor="rgba(11, 15, 25, 0.75)"
+            nodeColor={(node) => (node.type === 'user' ? '#FFFFFF' : '#E11D48')}
+            maskColor="rgba(8, 10, 15, 0.85)"
             style={{
               height: 100,
               width: 140,
-              backgroundColor: '#151B2B',
+              backgroundColor: '#121622',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--border-medium)',
               bottom: 16,
@@ -171,7 +169,7 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
         <button
           onClick={handleFitView}
           className="btn btn-secondary btn-sm"
-          style={{ backdropFilter: 'blur(8px)', background: 'rgba(21, 27, 43, 0.85)' }}
+          style={{ backdropFilter: 'blur(10px)', background: 'rgba(18, 22, 34, 0.85)' }}
           title="Centrar y ajustar grafo a la pantalla"
         >
           <Maximize2 size={14} />
@@ -184,7 +182,7 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
             setTimeout(handleFitView, 100);
           }}
           className="btn btn-secondary btn-sm"
-          style={{ backdropFilter: 'blur(8px)', background: 'rgba(21, 27, 43, 0.85)' }}
+          style={{ backdropFilter: 'blur(10px)', background: 'rgba(18, 22, 34, 0.85)' }}
           title="Restaurar alineación bipartita en dos columnas"
         >
           <LayoutGrid size={14} />
@@ -195,8 +193,8 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
           onClick={handleClearSelection}
           className="btn btn-ghost btn-sm"
           style={{
-            backdropFilter: 'blur(8px)',
-            background: 'rgba(21, 27, 43, 0.85)',
+            backdropFilter: 'blur(10px)',
+            background: 'rgba(18, 22, 34, 0.85)',
             border: '1px solid var(--border-subtle)',
           }}
           title="Limpiar selecciones y resaltados"
@@ -212,14 +210,14 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
           position: 'absolute',
           top: 14,
           left: 14,
-          background: 'rgba(21, 27, 43, 0.90)',
-          backdropFilter: 'blur(8px)',
+          background: 'rgba(18, 22, 34, 0.90)',
+          backdropFilter: 'blur(10px)',
           border: '1px solid var(--border-medium)',
           borderRadius: 'var(--radius-md)',
-          padding: '8px 12px',
+          padding: '8px 14px',
           display: 'flex',
           alignItems: 'center',
-          gap: 14,
+          gap: 16,
           fontSize: '0.75rem',
           zIndex: 10,
           boxShadow: 'var(--shadow-sm)',
@@ -231,12 +229,12 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
               width: 12,
               height: 12,
               borderRadius: '50%',
-              backgroundColor: '#22D3EE',
+              backgroundColor: '#FFFFFF',
               display: 'inline-block',
-              boxShadow: '0 0 8px rgba(34, 211, 238, 0.6)',
+              boxShadow: '0 0 8px rgba(255, 255, 255, 0.8)',
             }}
           />
-          <span style={{ color: '#E2E8F0', fontWeight: 600 }}>Usuarios (U)</span>
+          <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Usuarios (U)</span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -245,12 +243,12 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
               width: 14,
               height: 10,
               borderRadius: 3,
-              backgroundColor: '#F472B6',
+              backgroundColor: '#E11D48',
               display: 'inline-block',
-              boxShadow: '0 0 8px rgba(244, 114, 182, 0.6)',
+              boxShadow: '0 0 10px rgba(225, 29, 72, 0.8)',
             }}
           />
-          <span style={{ color: '#E2E8F0', fontWeight: 600 }}>Videos (V)</span>
+          <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Videos (V)</span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -258,11 +256,11 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
             style={{
               width: 18,
               height: 2,
-              backgroundColor: '#475569',
+              backgroundColor: 'rgba(255, 255, 255, 0.4)',
               display: 'inline-block',
             }}
           />
-          <span style={{ color: '#94A3B8' }}>Arista (Me gusta)</span>
+          <span style={{ color: 'var(--text-secondary)' }}>Arista (Like)</span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -270,12 +268,12 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
             style={{
               width: 18,
               height: 3,
-              backgroundColor: '#A855F7',
+              backgroundColor: '#FACC15',
               display: 'inline-block',
-              boxShadow: '0 0 6px #A855F7',
+              boxShadow: '0 0 8px #FACC15',
             }}
           />
-          <span style={{ color: '#C084FC', fontWeight: 600 }}>Trayectoria</span>
+          <span style={{ color: '#FACC15', fontWeight: 700 }}>Trayectoria</span>
         </div>
       </div>
     </div>

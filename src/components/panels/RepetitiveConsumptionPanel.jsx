@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useGraph } from '../../context/GraphContext';
-import { RefreshCw, Play, RotateCcw, AlertTriangle, ArrowRight, Layers, CheckCircle2 } from 'lucide-react';
-import { calculateRecommendations } from '../../math/graphLogic';
+import { Layers, Play, RotateCcw, AlertTriangle, ArrowRight, ShieldAlert, Sparkles } from 'lucide-react';
 
 export default function RepetitiveConsumptionPanel() {
   const { users, videos, edges, addEdge, resetToOriginal } = useGraph();
@@ -17,7 +16,6 @@ export default function RepetitiveConsumptionPanel() {
     },
   ]);
 
-  // Ciclos predefinidos que demuestran la evolución del grafo
   const CYCLES = [
     {
       cycle: 2,
@@ -77,81 +75,82 @@ export default function RepetitiveConsumptionPanel() {
   };
 
   return (
-    <div className="card" style={{ padding: '1.25rem' }}>
+    <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
+      {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <div>
           <h3 style={{ fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Layers size={20} color="#F59E0B" />
-            Bucle de Retroalimentación y Consumo Continuo
+            <Layers size={20} color="#FE2C55" />
+            <span>Módulo de Reflexión: Ciclo de Consumo Repetitivo & Ética</span>
           </h3>
           <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: 2 }}>
-            Simulación dinámica de cómo las interacciones sucesivas alimentan el ciclo de recomendaciones.
+            Diagrama cíclico de retroalimentación algorítmica y análisis de permanencia.
           </p>
         </div>
 
         <button
           onClick={handleResetCycles}
           className="btn btn-secondary btn-sm"
-          style={{ fontSize: '0.75rem', padding: '4px 10px' }}
+          style={{ fontSize: '0.75rem', padding: '4px 10px', color: '#FE2C55' }}
         >
           <RotateCcw size={12} /> Reiniciar bucle
         </button>
       </div>
 
-      {/* Process flow diagram */}
+      {/* Cyclic Diagram HUD */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
           gap: '0.5rem',
-          backgroundColor: 'var(--bg-surface-card)',
+          backgroundColor: 'rgba(8, 10, 15, 0.7)',
           border: '1px solid var(--border-subtle)',
           borderRadius: 'var(--radius-md)',
           padding: '1rem',
           marginBottom: '1rem',
         }}
       >
-        <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-          <div style={{ fontSize: '0.7rem', color: '#22D3EE', fontWeight: 800 }}>PASO 1</div>
-          <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#FFFFFF', marginTop: 2 }}>Usuario interactúa</div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Marca «Me gusta» a un video</div>
+        <div style={{ textAlign: 'center', padding: '0.4rem' }}>
+          <div style={{ fontSize: '0.68rem', color: '#FFFFFF', fontWeight: 800 }}>PASO 1</div>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#FFFFFF', marginTop: 2 }}>Interacción</div>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Me gusta a un video</div>
         </div>
 
-        <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-          <div style={{ fontSize: '0.7rem', color: '#38BDF8', fontWeight: 800 }}>PASO 2</div>
-          <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#FFFFFF', marginTop: 2 }}>Nueva arista</div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Se registra (U, V) en el grafo</div>
+        <div style={{ textAlign: 'center', padding: '0.4rem' }}>
+          <div style={{ fontSize: '0.68rem', color: '#FE2C55', fontWeight: 800 }}>PASO 2</div>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#FE2C55', marginTop: 2 }}>Nueva Arista</div>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Registro (U, V) en E</div>
         </div>
 
-        <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-          <div style={{ fontSize: '0.7rem', color: '#A855F7', fontWeight: 800 }}>PASO 3</div>
-          <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#FFFFFF', marginTop: 2 }}>Actualiza grados</div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Σ deg(v) = 2·|E|</div>
+        <div style={{ textAlign: 'center', padding: '0.4rem' }}>
+          <div style={{ fontSize: '0.68rem', color: '#FACC15', fontWeight: 800 }}>PASO 3</div>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#FACC15', marginTop: 2 }}>Recálculo</div>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>deg(u) y deg(v)</div>
         </div>
 
-        <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-          <div style={{ fontSize: '0.7rem', color: '#F472B6', fontWeight: 800 }}>PASO 4</div>
-          <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#FFFFFF', marginTop: 2 }}>Recomendación</div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Surgen nuevas trayectorias</div>
+        <div style={{ textAlign: 'center', padding: '0.4rem' }}>
+          <div style={{ fontSize: '0.68rem', color: '#E11D48', fontWeight: 800 }}>PASO 4</div>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#E11D48', marginTop: 2 }}>Sugerencia</div>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Nuevos caminos BFS</div>
         </div>
 
-        <div style={{ textAlign: 'center', padding: '0.5rem' }}>
-          <div style={{ fontSize: '0.7rem', color: '#22C55E', fontWeight: 800 }}>PASO 5</div>
-          <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#FFFFFF', marginTop: 2 }}>Consumo repetitivo</div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>El ciclo se reinicia</div>
+        <div style={{ textAlign: 'center', padding: '0.4rem' }}>
+          <div style={{ fontSize: '0.68rem', color: '#10B981', fontWeight: 800 }}>PASO 5</div>
+          <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#10B981', marginTop: 2 }}>Retención</div>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Consumo continuo</div>
         </div>
       </div>
 
       {/* Cycle Runner Controls */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: 10 }}>
         <div>
-          <span style={{ fontSize: '0.875rem', fontWeight: 700, color: '#FFFFFF' }}>
-            Ciclo actual: {currentCycle} de {CYCLES.length + 1}
+          <span style={{ fontSize: '0.875rem', fontWeight: 800, color: '#FFFFFF' }}>
+            Ciclo simulado: {currentCycle} de {CYCLES.length + 1}
           </span>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 2 }}>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: 2 }}>
             {currentCycle <= CYCLES.length
               ? `Próxima acción: ${CYCLES[currentCycle - 1].explanation}`
-              : 'Se completaron todos los ciclos demostrativos.'}
+              : 'Se completaron los ciclos demostrativos.'}
           </p>
         </div>
 
@@ -161,7 +160,7 @@ export default function RepetitiveConsumptionPanel() {
           className="btn btn-primary btn-sm"
           style={{ padding: '6px 14px' }}
         >
-          <Play size={14} />
+          <Play size={14} fill="white" />
           <span>Avanzar al siguiente ciclo</span>
         </button>
       </div>
@@ -182,28 +181,28 @@ export default function RepetitiveConsumptionPanel() {
               <th style={{ padding: '0.5rem 0.75rem' }}>Ciclo</th>
               <th style={{ padding: '0.5rem 0.75rem' }}>Evento</th>
               <th style={{ padding: '0.5rem 0.75rem' }}>Aristas |E|</th>
-              <th style={{ padding: '0.5rem 0.75rem' }}>Suma Grados</th>
-              <th style={{ padding: '0.5rem 0.75rem' }}>Impacto</th>
+              <th style={{ padding: '0.5rem 0.75rem' }}>∑ deg(v)</th>
+              <th style={{ padding: '0.5rem 0.75rem' }}>Lema Euler</th>
             </tr>
           </thead>
           <tbody>
             {cycleLog.map((log) => (
               <tr key={log.cycle} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                <td style={{ padding: '0.5rem 0.75rem', fontWeight: 700, color: '#22D3EE' }}>
+                <td style={{ padding: '0.5rem 0.75rem', fontWeight: 800, color: '#FFFFFF' }}>
                   #{log.cycle}
                 </td>
                 <td style={{ padding: '0.5rem 0.75rem', color: '#FFFFFF' }}>
                   {log.title}
                 </td>
-                <td style={{ padding: '0.5rem 0.75rem', fontFamily: 'Fira Code', color: '#F472B6' }}>
+                <td style={{ padding: '0.5rem 0.75rem', fontFamily: 'Fira Code', color: '#FE2C55', fontWeight: 700 }}>
                   {log.edgeCount}
                 </td>
-                <td style={{ padding: '0.5rem 0.75rem', fontFamily: 'Fira Code', color: '#A855F7' }}>
+                <td style={{ padding: '0.5rem 0.75rem', fontFamily: 'Fira Code', color: '#FFFFFF', fontWeight: 700 }}>
                   {log.totalDegree}
                 </td>
-                <td style={{ padding: '0.5rem 0.75rem', color: 'var(--text-secondary)' }}>
-                  <span className="badge badge-green" style={{ fontSize: '0.7rem' }}>
-                    Suma = 2 × {log.edgeCount}
+                <td style={{ padding: '0.5rem 0.75rem' }}>
+                  <span className="badge badge-green" style={{ fontSize: '0.68rem' }}>
+                    {log.totalDegree} = 2 · {log.edgeCount}
                   </span>
                 </td>
               </tr>
@@ -212,21 +211,21 @@ export default function RepetitiveConsumptionPanel() {
         </table>
       </div>
 
-      {/* Mandatory Academic Disclaimer Banner */}
+      {/* Academic & Ethical Note */}
       <div
         style={{
           padding: '0.875rem 1rem',
-          backgroundColor: 'rgba(245, 158, 11, 0.08)',
-          border: '1px solid rgba(245, 158, 11, 0.3)',
+          backgroundColor: 'rgba(225, 29, 72, 0.08)',
+          border: '1.5px solid var(--border-red)',
           borderRadius: 'var(--radius-md)',
           display: 'flex',
           alignItems: 'flex-start',
           gap: 10,
         }}
       >
-        <AlertTriangle size={20} color="#F59E0B" style={{ flexShrink: 0, marginTop: 2 }} />
-        <div style={{ fontSize: '0.8rem', color: '#FCD34D', lineHeight: 1.45 }}>
-          <strong>Aclaración académica oficial:</strong> Esta simulación explica un mecanismo simplificado de personalización de contenido mediante teoría de grafos. <em>No permite diagnosticar adicción ni demostrar que las recomendaciones la provoquen</em>. Recibir videos relacionados puede favorecer el tiempo de estancia en una plataforma, pero la conducta de uso problemático depende de factores psicológicos, ambientales y de diseño mucho más complejos que la topología de un grafo simple.
+        <ShieldAlert size={20} color="#FE2C55" style={{ flexShrink: 0, marginTop: 2 }} />
+        <div style={{ fontSize: '0.8rem', color: '#E2E8F0', lineHeight: 1.45 }}>
+          <strong style={{ color: '#FE2C55' }}>Nota ética y académica indispensable:</strong> Esta simulación explica el mecanismo matemático de personalización de contenido mediante grafos bipartitos. <em>No permite diagnosticar adicción ni demostrar una causalidad determinista de dependencia psicológica</em>. El uso problemático de pantallas involucra variables humanas, hábitos y diseño persuasivo mucho más complejos que la topología de un grafo simple.
         </div>
       </div>
     </div>

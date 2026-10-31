@@ -5,9 +5,7 @@ import {
   Share2,
   PlayCircle,
   FlaskConical,
-  BookOpen,
   Presentation,
-  CheckCircle2,
   ArrowRight,
   Sparkles,
   Users,
@@ -18,66 +16,66 @@ import {
 } from 'lucide-react';
 
 export default function HomeView({ setActiveView }) {
-  const { degrees, lemma, users, videos, edges } = useGraph();
+  const { lemma, users, videos, edges } = useGraph();
 
   const concepts = [
     {
       title: 'Grafos Bipartitos',
       desc: 'Dos conjuntos disjuntos de vértices (Usuarios y Videos). Ninguna arista une dos elementos del mismo grupo.',
       icon: Layers,
-      color: '#22D3EE',
+      color: '#FFFFFF',
     },
     {
       title: 'Vértices y Aristas',
       desc: 'Los puntos representan usuarios y videos; las líneas representan una interacción directa de «Me gusta».',
       icon: Share2,
-      color: '#F472B6',
+      color: '#FE2C55',
     },
     {
       title: 'Grado de un Vértice',
       desc: 'Cantidad de conexiones de un punto: cuántos videos le gustaron a un usuario o cuántos likes recibió un video.',
       icon: Users,
-      color: '#38BDF8',
+      color: '#FFFFFF',
     },
     {
       title: 'Lema del Apretón de Manos',
-      desc: 'La suma de todos los grados siempre duplica el número de aristas: Σ deg(v) = 2 · |E| (18 = 2 × 9).',
+      desc: 'La suma de todos los grados siempre duplica el número de aristas: ∑ deg(v) = 2 · |E| (18 = 2 × 9).',
       icon: Calculator,
-      color: '#22C55E',
+      color: '#10B981',
     },
     {
       title: 'Trayectorias y Longitud',
       desc: 'Caminos de longitud 2 entre usuarios para identificar intereses comunes (A → V1 → B y A → V2 → B).',
       icon: Compass,
-      color: '#A855F7',
+      color: '#FACC15',
     },
     {
       title: 'Motor de Recomendaciones',
       desc: 'Trayectorias de longitud 3 que conectan un usuario objetivo con un video no visto mediante vecinos similares.',
       icon: Sparkles,
-      color: '#EC4899',
+      color: '#FE2C55',
     },
   ];
 
   return (
-    <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '2rem 1.25rem' }}>
+    <div style={{ maxWidth: '1540px', margin: '0 auto', padding: '2rem 1.25rem' }}>
       {/* Hero Section */}
-      <div style={{ textAlign: 'center', maxWidth: '880px', margin: '0 auto 3rem' }}>
+      <div style={{ textAlign: 'center', maxWidth: '900px', margin: '0 auto 3rem' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: '1rem' }}>
-          <span className="badge badge-cyan" style={{ fontSize: '0.75rem', padding: '4px 12px' }}>
+          <span className="badge badge-red" style={{ fontSize: '0.75rem', padding: '4px 12px' }}>
             Universidad Mariano Gálvez de Guatemala
           </span>
-          <span className="badge badge-purple" style={{ fontSize: '0.75rem', padding: '4px 12px' }}>
+          <span className="badge badge-white" style={{ fontSize: '0.75rem', padding: '4px 12px' }}>
             Proyecto Final — Matemática Discreta
           </span>
         </div>
 
         <h1
           style={{
-            fontSize: 'clamp(2rem, 5vw, 3.25rem)',
+            fontSize: 'clamp(2.1rem, 5.2vw, 3.5rem)',
             lineHeight: 1.15,
             marginBottom: '1.25rem',
-            background: 'linear-gradient(135deg, #FFFFFF 30%, #94A3B8 100%)',
+            background: 'linear-gradient(135deg, #FFFFFF 40%, #FE2C55 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }}
@@ -85,7 +83,7 @@ export default function HomeView({ setActiveView }) {
           Descubre cómo funcionan las recomendaciones mediante{' '}
           <span
             style={{
-              background: 'linear-gradient(135deg, #22D3EE 0%, #F472B6 100%)',
+              background: 'linear-gradient(135deg, #FE2C55 0%, #FF6584 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
@@ -102,12 +100,12 @@ export default function HomeView({ setActiveView }) {
             marginBottom: '2rem',
           }}
         >
-          Los usuarios y los videos pueden representarse como <strong>vértices</strong>, mientras que sus
+          Los usuarios y los videos se representan como <strong>vértices</strong>, mientras que sus
           interacciones de «Me gusta» forman las <strong>aristas</strong>. Explora de forma interactiva
-          cómo la matemática discreta modela el descubrimiento de intereses compartidos.
+          cómo la matemática discreta modela el descubrimiento de intereses y el ciclo de contenido.
         </p>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons in Red & White */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
           <button
             onClick={() => setActiveView('guided')}
@@ -120,7 +118,7 @@ export default function HomeView({ setActiveView }) {
 
           <button
             onClick={() => setActiveView('lab')}
-            className="btn btn-secondary btn-lg"
+            className="btn btn-white btn-lg"
             style={{ display: 'flex', alignItems: 'center', gap: 10 }}
           >
             <FlaskConical size={20} />
@@ -129,8 +127,8 @@ export default function HomeView({ setActiveView }) {
 
           <button
             onClick={() => setActiveView('presentation')}
-            className="btn btn-accent btn-lg"
-            style={{ display: 'flex', alignItems: 'center', gap: 10 }}
+            className="btn btn-secondary btn-lg"
+            style={{ display: 'flex', alignItems: 'center', gap: 10, border: '1px solid #FE2C55', color: '#FE2C55' }}
           >
             <Presentation size={20} />
             <span>Modo Exposición</span>
@@ -138,85 +136,85 @@ export default function HomeView({ setActiveView }) {
         </div>
       </div>
 
-      {/* Quick Metrics Bar */}
+      {/* Quick Metrics Bar in Red & White */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
           gap: '1rem',
           marginBottom: '2.5rem',
         }}
       >
-        <div className="card" style={{ padding: '1rem', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: '#22D3EE', textTransform: 'uppercase', fontWeight: 700 }}>
+        <div className="card" style={{ padding: '1.25rem', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.72rem', color: '#FFFFFF', textTransform: 'uppercase', fontWeight: 800 }}>
             Usuarios (U)
           </div>
-          <div style={{ fontFamily: 'Fira Code', fontSize: '1.75rem', fontWeight: 800, color: '#FFFFFF', marginTop: 4 }}>
+          <div style={{ fontFamily: 'Fira Code', fontSize: '1.85rem', fontWeight: 900, color: '#FFFFFF', marginTop: 4 }}>
             {users.length}
           </div>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Vértices de personas</div>
         </div>
 
-        <div className="card" style={{ padding: '1rem', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: '#F472B6', textTransform: 'uppercase', fontWeight: 700 }}>
+        <div className="card" style={{ padding: '1.25rem', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.72rem', color: '#FE2C55', textTransform: 'uppercase', fontWeight: 800 }}>
             Videos (V)
           </div>
-          <div style={{ fontFamily: 'Fira Code', fontSize: '1.75rem', fontWeight: 800, color: '#FFFFFF', marginTop: 4 }}>
+          <div style={{ fontFamily: 'Fira Code', fontSize: '1.85rem', fontWeight: 900, color: '#FE2C55', marginTop: 4 }}>
             {videos.length}
           </div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Vértices de contenido</div>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Vértices temáticos</div>
         </div>
 
-        <div className="card" style={{ padding: '1rem', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: '#FFFFFF', textTransform: 'uppercase', fontWeight: 700 }}>
+        <div className="card" style={{ padding: '1.25rem', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.72rem', color: '#FFFFFF', textTransform: 'uppercase', fontWeight: 800 }}>
             Aristas (|E|)
           </div>
-          <div style={{ fontFamily: 'Fira Code', fontSize: '1.75rem', fontWeight: 800, color: '#38BDF8', marginTop: 4 }}>
+          <div style={{ fontFamily: 'Fira Code', fontSize: '1.85rem', fontWeight: 900, color: '#FFFFFF', marginTop: 4 }}>
             {edges.length}
           </div>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Interacciones de Me gusta</div>
         </div>
 
-        <div className="card" style={{ padding: '1rem', textAlign: 'center' }}>
-          <div style={{ fontSize: '0.75rem', color: '#22C55E', textTransform: 'uppercase', fontWeight: 700 }}>
+        <div className="card" style={{ padding: '1.25rem', textAlign: 'center' }}>
+          <div style={{ fontSize: '0.72rem', color: '#10B981', textTransform: 'uppercase', fontWeight: 800 }}>
             Suma de Grados
           </div>
-          <div style={{ fontFamily: 'Fira Code', fontSize: '1.75rem', fontWeight: 800, color: '#22C55E', marginTop: 4 }}>
+          <div style={{ fontFamily: 'Fira Code', fontSize: '1.85rem', fontWeight: 900, color: '#10B981', marginTop: 4 }}>
             {lemma.totalDegree} = 2 · {lemma.edgeCount}
           </div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Lema comprobado</div>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Lema Euler comprobado</div>
         </div>
       </div>
 
       {/* Main Interactive Graph Visualizer Section */}
       <div style={{ marginBottom: '3.5rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: 10 }}>
           <div>
             <h2 style={{ fontSize: '1.4rem', color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Share2 size={22} color="#22D3EE" />
-              Lienzo del Grafo Bipartito
+              <Share2 size={22} color="#FE2C55" />
+              <span>Lienzo del Grafo Bipartito (React Flow)</span>
             </h2>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-              Pasa el cursor sobre cualquier usuario para ver sus videos relacionados o selecciona un video para ver a sus espectadores.
+              Pasa el cursor sobre un usuario para iluminar sus conexiones directas o haz clic sobre el Usuario A para simular recomendaciones.
             </p>
           </div>
           <button onClick={() => setActiveView('lab')} className="btn btn-secondary btn-sm">
-            <span>Abrir controles completos</span>
+            <span>Abrir laboratorio completo</span>
             <ArrowRight size={14} />
           </button>
         </div>
 
-        <FlowGraph height="560px" interactive={true} />
+        <FlowGraph height="580px" interactive={true} />
       </div>
 
       {/* Core Mathematical Concepts Grid */}
       <div style={{ marginBottom: '3.5rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.75rem', color: '#FFFFFF', marginBottom: '0.5rem' }}>
-            Conceptos Matemáticos del Curso
+          <h2 style={{ fontSize: '1.8rem', color: '#FFFFFF', marginBottom: '0.5rem' }}>
+            Conceptos Matemáticos Evaluados en Clase
           </h2>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
-            Este simulador materializa los temas evaluados en clase mediante un laboratorio interactivo real.
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', maxWidth: '640px', margin: '0 auto' }}>
+            Cada concepto del informe se materializa con rigor y claridad pedagógica dentro de este simulador.
           </p>
         </div>
 
@@ -241,12 +239,13 @@ export default function HomeView({ setActiveView }) {
                     width: 44,
                     height: 44,
                     borderRadius: 'var(--radius-md)',
-                    backgroundColor: `${concept.color}15`,
+                    backgroundColor: 'rgba(225, 29, 72, 0.12)',
                     color: concept.color,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginBottom: '1rem',
+                    border: '1px solid var(--border-red)',
                   }}
                 >
                   <Icon size={22} />

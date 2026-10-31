@@ -1,73 +1,102 @@
 :root {
-  /* Colors */
-  --bg-primary: #0B0F19;
-  --bg-surface: #151B2B;
-  --bg-surface-hover: #1C2438;
-  --bg-surface-active: #232D46;
-  --bg-surface-card: #131826;
-  --bg-glass: rgba(21, 27, 43, 0.85);
+  /* ==========================================================================
+     GRAPHLAB TIKTOK — RED & WHITE CYBER-ACADEMIC SYSTEM
+     Universidad Mariano Gálvez de Guatemala
+     ========================================================================== */
 
-  --border-subtle: #1E2738;
-  --border-medium: #2A364F;
-  --border-focus: #38BDF8;
+  /* Canvas & Dark Surfaces */
+  --bg-primary: #080A0F;
+  --bg-canvas: #0C0F17;
+  --bg-surface: #121622;
+  --bg-surface-hover: #1A2030;
+  --bg-surface-active: #222B3F;
+  --bg-surface-card: rgba(16, 20, 31, 0.90);
+  --bg-glass: rgba(18, 22, 34, 0.75);
+  --bg-glass-heavy: rgba(12, 15, 24, 0.92);
 
-  /* Node Categories */
-  --user-cyan: #22D3EE;
-  --user-cyan-hover: #38BDF8;
-  --user-cyan-glow: rgba(34, 211, 238, 0.25);
-  --user-cyan-bg: rgba(34, 211, 238, 0.10);
-  --user-cyan-border: rgba(34, 211, 238, 0.4);
+  /* Subtle Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-strong: rgba(255, 255, 255, 0.28);
+  --border-red: rgba(225, 29, 72, 0.45);
+  --border-focus: #FE2C55;
 
-  --video-pink: #F472B6;
-  --video-pink-hover: #FB7185;
-  --video-pink-glow: rgba(244, 114, 182, 0.25);
-  --video-pink-bg: rgba(244, 114, 182, 0.10);
-  --video-pink-border: rgba(244, 114, 182, 0.4);
+  /* Red Chroma (Crimson, Ruby, Scarlet) */
+  --red-primary: #E11D48;
+  --red-vivid: #FE2C55;
+  --red-bright: #F43F5E;
+  --red-dark: #9F1239;
+  --red-deep: #4C0519;
+  --red-glow: rgba(254, 44, 85, 0.45);
+  --red-glow-intense: 0 0 30px rgba(254, 44, 85, 0.70);
+  --red-bg: rgba(225, 29, 72, 0.12);
+  --red-bg-hover: rgba(225, 29, 72, 0.20);
 
-  /* Status and Accents */
-  --accent-green: #22C55E;
-  --accent-green-bg: rgba(34, 197, 94, 0.12);
-  --accent-green-glow: rgba(34, 197, 94, 0.3);
+  /* White & Platinum Chroma */
+  --white-pure: #FFFFFF;
+  --white-soft: #F8FAFC;
+  --white-muted: #E2E8F0;
+  --white-glow: 0 0 25px rgba(255, 255, 255, 0.45);
+  --white-bg: rgba(255, 255, 255, 0.08);
+  --white-bg-hover: rgba(255, 255, 255, 0.15);
 
-  --accent-purple: #A855F7;
-  --accent-purple-bg: rgba(168, 85, 247, 0.12);
-  --accent-purple-glow: rgba(168, 85, 247, 0.3);
+  /* Node Representation */
+  /* Partición U (Usuarios): Blanco Puro con destellos escarlata */
+  --user-node-bg: #FFFFFF;
+  --user-node-text: #080A0F;
+  --user-node-border: #E2E8F0;
+  --user-node-glow: 0 0 22px rgba(255, 255, 255, 0.50);
+  --user-badge-bg: #E11D48;
+  --user-badge-text: #FFFFFF;
+
+  /* Partición V (Videos): Rojo Carmín / Escarlata con tipografía blanca */
+  --video-node-bg: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
+  --video-node-text: #FFFFFF;
+  --video-node-border: #FE2C55;
+  --video-node-glow: 0 0 24px rgba(254, 44, 85, 0.50);
+  --video-badge-bg: #FFFFFF;
+  --video-badge-text: #9F1239;
+
+  /* Status and Mathematical Accents */
+  --accent-green: #10B981;
+  --accent-green-bg: rgba(16, 185, 129, 0.12);
+  --accent-green-glow: 0 0 20px rgba(16, 185, 129, 0.40);
 
   --accent-amber: #F59E0B;
   --accent-amber-bg: rgba(245, 158, 11, 0.12);
+  --accent-amber-glow: 0 0 20px rgba(245, 158, 11, 0.35);
 
-  --accent-red: #EF4444;
-  --accent-red-bg: rgba(239, 68, 68, 0.12);
+  --accent-purple: #A855F7;
+  --accent-purple-bg: rgba(168, 85, 247, 0.12);
 
   /* Typography */
   --text-primary: #FFFFFF;
-  --text-secondary: #94A3B8;
+  --text-secondary: #CBD5E1;
   --text-muted: #64748B;
-  --text-inverse: #0B0F19;
+  --text-inverse: #080A0F;
 
-  /* Edge Colors */
-  --edge-default: #475569;
-  --edge-highlight: #38BDF8;
-  --edge-path: #A855F7;
-  --edge-new: #22C55E;
+  /* Edges */
+  --edge-default: rgba(255, 255, 255, 0.22);
+  --edge-highlight: #FE2C55;
+  --edge-path: #FFFFFF;
+  --edge-new: #10B981;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5);
-  --shadow-glow-cyan: 0 0 20px rgba(34, 211, 238, 0.35);
-  --shadow-glow-pink: 0 0 20px rgba(244, 114, 182, 0.35);
-  --shadow-glow-green: 0 0 20px rgba(34, 197, 94, 0.35);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.70);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 
   /* Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 26px;
   --radius-full: 9999px;
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 350ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

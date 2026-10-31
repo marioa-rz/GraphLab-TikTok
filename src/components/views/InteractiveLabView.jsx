@@ -8,25 +8,22 @@ import RecommendationPanel from '../panels/RecommendationPanel';
 import NewInteractionSimulator from '../panels/NewInteractionSimulator';
 import RepetitiveConsumptionPanel from '../panels/RepetitiveConsumptionPanel';
 import {
-  Plus,
-  RotateCcw,
-  Trash2,
   Share2,
   Sparkles,
   Route,
   Calculator,
   Layers,
-  Heart,
   UserPlus,
   Video,
   X,
+  RotateCcw,
+  Trash2,
 } from 'lucide-react';
 
 export default function InteractiveLabView() {
   const {
     users,
     videos,
-    edges,
     addUser,
     addVideo,
     addEdge,
@@ -37,7 +34,7 @@ export default function InteractiveLabView() {
 
   const [activePanelTab, setActivePanelTab] = useState('recommendations'); // 'recommendations' | 'paths' | 'math' | 'cycles'
 
-  // Modals para agregar usuario o video
+  // Modals para agregar usuario, video o interacción
   const [showAddUserModal, setShowAddUserModal] = useState(false);
   const [newUserName, setNewUserName] = useState('');
   const [newUserId, setNewUserId] = useState('');
@@ -81,7 +78,7 @@ export default function InteractiveLabView() {
   };
 
   return (
-    <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '1.5rem 1.25rem' }}>
+    <div style={{ maxWidth: '1540px', margin: '0 auto', padding: '1.5rem 1.25rem' }}>
       {/* Header and Quick Controls Toolbar */}
       <div
         style={{
@@ -95,7 +92,7 @@ export default function InteractiveLabView() {
       >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span className="badge badge-purple">Laboratorio Abierto</span>
+            <span className="badge badge-red">Laboratorio Abierto</span>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
               Experimentación en Tiempo Real
             </span>
@@ -105,12 +102,12 @@ export default function InteractiveLabView() {
           </h2>
         </div>
 
-        {/* Action Buttons Toolbar */}
+        {/* Action Buttons Toolbar in Red & White */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           <button
             onClick={() => setShowAddUserModal(true)}
             className="btn btn-secondary btn-sm"
-            style={{ color: '#22D3EE' }}
+            style={{ color: '#FFFFFF', border: '1px solid rgba(255, 255, 255, 0.3)' }}
           >
             <UserPlus size={14} /> + Usuario
           </button>
@@ -118,7 +115,7 @@ export default function InteractiveLabView() {
           <button
             onClick={() => setShowAddVideoModal(true)}
             className="btn btn-secondary btn-sm"
-            style={{ color: '#F472B6' }}
+            style={{ color: '#FE2C55', border: '1px solid var(--border-red)' }}
           >
             <Video size={14} /> + Video
           </button>
@@ -133,7 +130,7 @@ export default function InteractiveLabView() {
           <button
             onClick={resetToOriginal}
             className="btn btn-ghost btn-sm"
-            style={{ color: '#38BDF8' }}
+            style={{ color: '#FE2C55' }}
             title="Restaurar el grafo original de 4 usuarios y 5 videos"
           >
             <RotateCcw size={14} /> Base Original
@@ -142,7 +139,7 @@ export default function InteractiveLabView() {
           <button
             onClick={clearGraph}
             className="btn btn-ghost btn-sm"
-            style={{ color: '#EF4444' }}
+            style={{ color: '#64748B' }}
             title="Limpiar grafo por completo"
           >
             <Trash2 size={14} /> Limpiar
@@ -154,7 +151,7 @@ export default function InteractiveLabView() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)',
+          gridTemplateColumns: 'minmax(0, 1.25fr) minmax(0, 1fr)',
           gap: '1.5rem',
           alignItems: 'start',
         }}
@@ -168,9 +165,9 @@ export default function InteractiveLabView() {
           }
         `}</style>
 
-        {/* Left Column: Visualizer */}
+        {/* Left Column: Visualizer Canvas */}
         <div>
-          <FlowGraph height="640px" interactive={true} />
+          <FlowGraph height="650px" interactive={true} />
           <div
             style={{
               marginTop: '0.75rem',
@@ -183,7 +180,7 @@ export default function InteractiveLabView() {
             }}
           >
             <span>
-              💡 Puedes arrastrar un usuario hacia un video para conectarlos, o arrastrar nodos para reorganizar el diseño.
+              💡 Puedes arrastrar un usuario hacia un video para conectarlos, o arrastrar nodos para reorganizar el lienzo.
             </span>
             <button
               onClick={resetNodeDistribution}
@@ -195,7 +192,7 @@ export default function InteractiveLabView() {
           </div>
         </div>
 
-        {/* Right Column: Tabbed Panels */}
+        {/* Right Column: HUD Analytical Tabs */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {/* Panel Navigation Tabs */}
           <div
@@ -284,8 +281,8 @@ export default function InteractiveLabView() {
         <div className="modal-backdrop" onClick={() => setShowAddUserModal(false)}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
             <div style={{ padding: '1.25rem', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ fontSize: '1.1rem', color: '#22D3EE', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <UserPlus size={18} /> Crear Nuevo Usuario
+              <h3 style={{ fontSize: '1.1rem', color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <UserPlus size={18} color="#FE2C55" /> Crear Nuevo Usuario (Partición U)
               </h3>
               <button onClick={() => setShowAddUserModal(false)} className="btn btn-ghost btn-sm" style={{ padding: 4 }}>
                 <X size={16} />
@@ -334,8 +331,8 @@ export default function InteractiveLabView() {
         <div className="modal-backdrop" onClick={() => setShowAddVideoModal(false)}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
             <div style={{ padding: '1.25rem', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ fontSize: '1.1rem', color: '#F472B6', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Video size={18} /> Crear Nuevo Video
+              <h3 style={{ fontSize: '1.1rem', color: '#FE2C55', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <Video size={18} /> Crear Nuevo Video (Partición V)
               </h3>
               <button onClick={() => setShowAddVideoModal(false)} className="btn btn-ghost btn-sm" style={{ padding: 4 }}>
                 <X size={16} />
@@ -383,7 +380,7 @@ export default function InteractiveLabView() {
                 <button type="button" onClick={() => setShowAddVideoModal(false)} className="btn btn-ghost btn-sm">
                   Cancelar
                 </button>
-                <button type="submit" className="btn btn-accent btn-sm">
+                <button type="submit" className="btn btn-primary btn-sm">
                   Crear Video
                 </button>
               </div>
@@ -392,13 +389,13 @@ export default function InteractiveLabView() {
         </div>
       )}
 
-      {/* Modal: Agregar Interacción */}
+      {/* Modal: Registrar Interacción */}
       {showConnectModal && (
         <div className="modal-backdrop" onClick={() => setShowConnectModal(false)}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
             <div style={{ padding: '1.25rem', borderBottom: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h3 style={{ fontSize: '1.1rem', color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Share2 size={18} color="#38BDF8" /> Registrar Interacción Bipartita (U ↔ V)
+                <Share2 size={18} color="#FE2C55" /> Registrar Interacción Bipartita (U ↔ V)
               </h3>
               <button onClick={() => setShowConnectModal(false)} className="btn btn-ghost btn-sm" style={{ padding: 4 }}>
                 <X size={16} />
@@ -406,7 +403,7 @@ export default function InteractiveLabView() {
             </div>
             <form onSubmit={handleCreateEdge} style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
-                <label style={{ fontSize: '0.75rem', color: '#22D3EE', display: 'block', marginBottom: 4, fontWeight: 700 }}>
+                <label style={{ fontSize: '0.75rem', color: '#FFFFFF', display: 'block', marginBottom: 4, fontWeight: 700 }}>
                   Seleccionar Usuario (Partición U):
                 </label>
                 <select
@@ -425,7 +422,7 @@ export default function InteractiveLabView() {
               </div>
 
               <div>
-                <label style={{ fontSize: '0.75rem', color: '#F472B6', display: 'block', marginBottom: 4, fontWeight: 700 }}>
+                <label style={{ fontSize: '0.75rem', color: '#FE2C55', display: 'block', marginBottom: 4, fontWeight: 700 }}>
                   Seleccionar Video (Partición V):
                 </label>
                 <select
@@ -444,7 +441,7 @@ export default function InteractiveLabView() {
               </div>
 
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                * El sistema verifica automáticamente que no existan aristas duplicadas ni conexiones entre el mismo conjunto.
+                * El sistema verifica automáticamente la propiedad bipartita simple (rechaza lazos y aristas duplicadas).
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 8 }}>

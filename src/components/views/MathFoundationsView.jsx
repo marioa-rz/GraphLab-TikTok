@@ -11,7 +11,6 @@ import {
   Sparkles,
   CheckCircle2,
   XCircle,
-  HelpCircle,
   Play,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -24,10 +23,10 @@ export default function MathFoundationsView({ setActiveView }) {
     setTestResults(res);
     if (res.allPassed) {
       confetti({
-        particleCount: 60,
-        spread: 70,
+        particleCount: 65,
+        spread: 75,
         origin: { y: 0.75 },
-        colors: ['#22C55E', '#22D3EE', '#F472B6'],
+        colors: ['#FE2C55', '#FFFFFF', '#10B981'],
       });
     }
   };
@@ -36,7 +35,7 @@ export default function MathFoundationsView({ setActiveView }) {
     {
       title: '1. ¿Qué es un Grafo?',
       symbol: 'G = (W, E)',
-      color: '#22D3EE',
+      color: '#FE2C55',
       formal:
         'Estructura matemática formada por un conjunto no vacío W de vértices y un conjunto E de aristas (pares no ordenados de vértices).',
       simple:
@@ -47,29 +46,29 @@ export default function MathFoundationsView({ setActiveView }) {
     {
       title: '2. ¿Qué es un Vértice?',
       symbol: 'v ∈ W',
-      color: '#38BDF8',
+      color: '#FFFFFF',
       formal:
         'Elemento fundamental que representa una entidad discreta en la red. W = U ∪ V.',
       simple:
-        'Cada uno de los puntos del dibujo. En un corcho con fotos, cada foto es un vértice.',
+        'Cada uno de los puntos del dibujo. En un pizarrón con fotos, cada foto es un vértice.',
       inApp:
         'Tenemos 9 vértices: 4 usuarios en U (A, B, C, D) y 5 videos en V (V1 a V5).',
     },
     {
       title: '3. ¿Qué es una Arista?',
       symbol: 'e = {u, v} ∈ E',
-      color: '#F472B6',
+      color: '#FE2C55',
       formal:
         'Par que conecta dos vértices indicando la presencia de una relación bidireccional no dirigida.',
       simple:
-        'Cada línea o hilo de lana que une dos fotos. Significa: «a esta persona le gustó este video».',
+        'Cada línea o hilo que une dos fotos. Significa: «a esta persona le gustó este video».',
       inApp:
         'El conjunto inicial tiene 9 aristas: (A,V1), (A,V2), (B,V1), (B,V2), (B,V3), etc.',
     },
     {
       title: '4. ¿Qué significa el Grado de un Vértice?',
       symbol: 'deg(v) = |N(v)|',
-      color: '#EC4899',
+      color: '#FFFFFF',
       formal:
         'Número de aristas incidentes en el vértice v, es decir, el cardinal de su conjunto de vecinos.',
       simple:
@@ -80,7 +79,7 @@ export default function MathFoundationsView({ setActiveView }) {
     {
       title: '5. ¿Qué es un Grafo Bipartito?',
       symbol: 'W = U ∪ V, U ∩ V = ∅, E ⊆ U × V',
-      color: '#A855F7',
+      color: '#FE2C55',
       formal:
         'Grafo cuyos vértices pueden particionarse en dos conjuntos disjuntos tales que ninguna arista une vértices del mismo conjunto.',
       simple:
@@ -91,7 +90,7 @@ export default function MathFoundationsView({ setActiveView }) {
     {
       title: '6. Trayectorias y Longitud de Trayectorias',
       symbol: 'P = (v0, v1, ..., vk), Longitud = k',
-      color: '#C084FC',
+      color: '#FACC15',
       formal:
         'Sucesión finita de vértices unidos consecutivamente por aristas distintas. La longitud es el número de aristas que componen el camino.',
       simple:
@@ -101,8 +100,8 @@ export default function MathFoundationsView({ setActiveView }) {
     },
     {
       title: '7. Lema del Apretón de Manos (Euler)',
-      symbol: 'Σ_{v ∈ W} deg(v) = 2 · |E|',
-      color: '#22C55E',
+      symbol: '∑_{v ∈ W} deg(v) = 2 · |E|',
+      color: '#10B981',
       formal:
         'En cualquier grafo finito no dirigido, la suma de los grados de todos los vértices es estrictamente el doble del número de aristas.',
       simple:
@@ -112,8 +111,8 @@ export default function MathFoundationsView({ setActiveView }) {
     },
     {
       title: '8. Generación de Recomendaciones',
-      symbol: 'Puntuación(U, V) = Σ |Comunes|',
-      color: '#F59E0B',
+      symbol: 'Puntuación(U, V) = ∑ |Comunes|',
+      color: '#FE2C55',
       formal:
         'Heurística topológica que encuentra caminos de longitud 3: Usuario_Objetivo → Video_Común → Vecino_Similar → Video_Candidato.',
       simple:
@@ -124,10 +123,10 @@ export default function MathFoundationsView({ setActiveView }) {
   ];
 
   return (
-    <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '1.5rem 1.25rem' }}>
+    <div style={{ maxWidth: '1540px', margin: '0 auto', padding: '1.5rem 1.25rem' }}>
       {/* Header */}
-      <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 2.5rem' }}>
-        <span className="badge badge-cyan" style={{ marginBottom: 8 }}>
+      <div style={{ textAlign: 'center', maxWidth: '820px', margin: '0 auto 2.5rem' }}>
+        <span className="badge badge-red" style={{ marginBottom: 8 }}>
           Marco Teórico Universitario
         </span>
         <h2 style={{ fontSize: '2rem', color: '#FFFFFF', marginBottom: '0.75rem' }}>
@@ -149,17 +148,17 @@ export default function MathFoundationsView({ setActiveView }) {
         }}
       >
         {mathCards.map((card, idx) => (
-          <div key={idx} className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column' }}>
+          <div key={idx} className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', border: '1px solid var(--border-subtle)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
               <h3 style={{ fontSize: '1.1rem', color: '#FFFFFF' }}>{card.title}</h3>
               <span
                 style={{
                   fontFamily: 'Fira Code',
                   fontSize: '0.75rem',
-                  fontWeight: 700,
+                  fontWeight: 800,
                   color: card.color,
-                  backgroundColor: `${card.color}15`,
-                  padding: '2px 8px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  padding: '3px 8px',
                   borderRadius: 4,
                   border: `1px solid ${card.color}35`,
                 }}
@@ -170,7 +169,7 @@ export default function MathFoundationsView({ setActiveView }) {
 
             {/* Formal Definition */}
             <div style={{ marginBottom: '0.75rem' }}>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700, marginBottom: 2 }}>
+              <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 800, marginBottom: 2 }}>
                 Definición formal:
               </div>
               <p style={{ fontSize: '0.85rem', color: '#E2E8F0', lineHeight: 1.45 }}>
@@ -178,17 +177,17 @@ export default function MathFoundationsView({ setActiveView }) {
               </p>
             </div>
 
-            {/* In Simple Words (Just like paper!) */}
+            {/* In Simple Words */}
             <div
               style={{
-                backgroundColor: 'rgba(21, 27, 43, 0.7)',
+                backgroundColor: 'rgba(8, 10, 15, 0.7)',
                 borderLeft: `3px solid ${card.color}`,
                 padding: '0.625rem 0.875rem',
                 borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
                 marginBottom: '0.75rem',
               }}
             >
-              <div style={{ fontSize: '0.7rem', color: card.color, fontWeight: 700, marginBottom: 2 }}>
+              <div style={{ fontSize: '0.7rem', color: card.color, fontWeight: 800, marginBottom: 2 }}>
                 En palabras simples:
               </div>
               <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', lineHeight: 1.45 }}>
@@ -209,8 +208,8 @@ export default function MathFoundationsView({ setActiveView }) {
         className="card"
         style={{
           padding: '1.75rem',
-          border: '1px solid var(--border-focus)',
-          background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.05) 0%, var(--bg-surface) 100%)',
+          border: '1.5px solid var(--border-red)',
+          background: 'linear-gradient(135deg, rgba(225, 29, 72, 0.08) 0%, var(--bg-surface) 100%)',
         }}
       >
         <div
@@ -224,14 +223,14 @@ export default function MathFoundationsView({ setActiveView }) {
           }}
         >
           <div>
-            <span className="badge badge-green" style={{ marginBottom: 6 }}>
-              Verificación y Validación Académica
+            <span className="badge badge-red" style={{ marginBottom: 6 }}>
+              Validación Científica de Algoritmos
             </span>
             <h3 style={{ fontSize: '1.3rem', color: '#FFFFFF' }}>
               Batería de Pruebas Unitarias del Proyecto (10 Casos de Prueba)
             </h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: 2 }}>
-              Ejecuta el conjunto completo de validaciones para demostrar ante el docente que todos los cálculos matemáticos son exactos y consistentes.
+              Ejecuta el conjunto completo de validaciones para comprobar ante el docente la exactitud de los cálculos.
             </p>
           </div>
 
@@ -254,11 +253,11 @@ export default function MathFoundationsView({ setActiveView }) {
                 alignItems: 'center',
                 gap: 8,
                 padding: '0.75rem 1rem',
-                backgroundColor: testResults.allPassed ? 'rgba(34, 197, 94, 0.15)' : 'rgba(239, 68, 68, 0.15)',
-                border: testResults.allPassed ? '1px solid #22C55E' : '1px solid #EF4444',
+                backgroundColor: testResults.allPassed ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)',
+                border: testResults.allPassed ? '1px solid #10B981' : '1px solid #EF4444',
                 borderRadius: 'var(--radius-md)',
-                color: testResults.allPassed ? '#22C55E' : '#EF4444',
-                fontWeight: 700,
+                color: testResults.allPassed ? '#10B981' : '#EF4444',
+                fontWeight: 800,
                 fontSize: '0.9rem',
                 marginBottom: '1rem',
               }}
@@ -288,17 +287,17 @@ export default function MathFoundationsView({ setActiveView }) {
                 >
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
                     {r.passed ? (
-                      <CheckCircle2 size={16} color="#22C55E" style={{ marginTop: 2, flexShrink: 0 }} />
+                      <CheckCircle2 size={16} color="#10B981" style={{ marginTop: 2, flexShrink: 0 }} />
                     ) : (
                       <XCircle size={16} color="#EF4444" style={{ marginTop: 2, flexShrink: 0 }} />
                     )}
                     <div>
                       <strong style={{ color: '#FFFFFF' }}>{r.title}</strong>
                       <div style={{ color: 'var(--text-secondary)', marginTop: 2 }}>
-                        Esperado: <code style={{ color: '#38BDF8' }}>{r.expected}</code>
+                        Esperado: <code style={{ color: '#FFFFFF' }}>{r.expected}</code>
                       </div>
                       <div style={{ color: 'var(--text-muted)', marginTop: 1 }}>
-                        Obtenido: <code style={{ color: '#22C55E' }}>{r.actual}</code>
+                        Obtenido: <code style={{ color: '#10B981' }}>{r.actual}</code>
                       </div>
                     </div>
                   </div>

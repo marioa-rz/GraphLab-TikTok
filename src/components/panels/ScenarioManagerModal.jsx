@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGraph } from '../../context/GraphContext';
 import { SCENARIOS } from '../../data/scenarios';
-import { Layers, Download, Upload, Check, X, AlertCircle, Bookmark, Copy } from 'lucide-react';
+import { Layers, Download, Upload, X, Copy } from 'lucide-react';
 
 export default function ScenarioManagerModal({ isOpen, onClose }) {
   const {
@@ -13,7 +13,7 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
   } = useGraph();
 
   const [jsonInput, setJsonInput] = useState('');
-  const [activeTab, setActiveTab] = useState('scenarios'); // 'scenarios' | 'json'
+  const [activeTab, setActiveTab] = useState('scenarios');
 
   if (!isOpen) return null;
 
@@ -55,6 +55,7 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            backgroundColor: 'rgba(225, 29, 72, 0.1)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -63,8 +64,8 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
                 width: 36,
                 height: 36,
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: 'rgba(56, 189, 248, 0.15)',
-                color: '#38BDF8',
+                backgroundColor: 'rgba(225, 29, 72, 0.2)',
+                color: '#FE2C55',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -97,9 +98,9 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
               padding: '0.75rem 1rem',
               background: 'none',
               border: 'none',
-              borderBottom: activeTab === 'scenarios' ? '2px solid #22D3EE' : '2px solid transparent',
-              color: activeTab === 'scenarios' ? '#22D3EE' : 'var(--text-secondary)',
-              fontWeight: 600,
+              borderBottom: activeTab === 'scenarios' ? '2px solid #FE2C55' : '2px solid transparent',
+              color: activeTab === 'scenarios' ? '#FE2C55' : 'var(--text-secondary)',
+              fontWeight: 700,
               fontSize: '0.875rem',
               cursor: 'pointer',
             }}
@@ -112,9 +113,9 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
               padding: '0.75rem 1rem',
               background: 'none',
               border: 'none',
-              borderBottom: activeTab === 'json' ? '2px solid #22D3EE' : '2px solid transparent',
-              color: activeTab === 'json' ? '#22D3EE' : 'var(--text-secondary)',
-              fontWeight: 600,
+              borderBottom: activeTab === 'json' ? '2px solid #FE2C55' : '2px solid transparent',
+              color: activeTab === 'json' ? '#FE2C55' : 'var(--text-secondary)',
+              fontWeight: 700,
               fontSize: '0.875rem',
               cursor: 'pointer',
             }}
@@ -135,17 +136,17 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
                     style={{
                       padding: '1rem',
                       borderRadius: 'var(--radius-md)',
-                      backgroundColor: isActive ? 'rgba(34, 211, 238, 0.08)' : 'var(--bg-surface-card)',
-                      border: isActive ? '1px solid #22D3EE' : '1px solid var(--border-subtle)',
+                      backgroundColor: isActive ? 'rgba(225, 29, 72, 0.1)' : 'var(--bg-surface-card)',
+                      border: isActive ? '1.5px solid #FE2C55' : '1px solid var(--border-subtle)',
                       transition: 'all 0.2s',
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <span style={{ fontWeight: 700, fontSize: '0.95rem', color: '#FFFFFF' }}>
+                        <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#FFFFFF' }}>
                           {scen.name}
                         </span>
-                        <span className="badge badge-cyan" style={{ fontSize: '0.7rem' }}>
+                        <span className="badge badge-red" style={{ fontSize: '0.68rem' }}>
                           {scen.badge}
                         </span>
                       </div>
@@ -166,8 +167,8 @@ export default function ScenarioManagerModal({ isOpen, onClose }) {
                       {scen.description}
                     </p>
 
-                    <div style={{ fontSize: '0.75rem', color: '#94A3B8', borderTop: '1px dashed var(--border-subtle)', paddingTop: 6 }}>
-                      <strong style={{ color: '#FCD34D' }}>Objetivo didáctico:</strong> {scen.learningGoal}
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', borderTop: '1px dashed var(--border-subtle)', paddingTop: 6 }}>
+                      <strong style={{ color: '#FACC15' }}>Objetivo didáctico:</strong> {scen.learningGoal}
                     </div>
                   </div>
                 );

@@ -1,7 +1,24 @@
 import React, { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
-import { Video, Sparkles } from 'lucide-react';
+import { Video, Sparkles, Smile, Home, Compass, Film, Flame } from 'lucide-react';
 import { useGraph } from '../../context/GraphContext';
+
+function getVideoIcon(id) {
+  switch (id) {
+    case 'V1':
+      return <Film size={15} color="#FFFFFF" />;
+    case 'V2':
+      return <Flame size={15} color="#FFFFFF" />;
+    case 'V3':
+      return <Smile size={15} color="#FFFFFF" />;
+    case 'V4':
+      return <Home size={15} color="#FFFFFF" />;
+    case 'V5':
+      return <Compass size={15} color="#FFFFFF" />;
+    default:
+      return <Video size={15} color="#FFFFFF" />;
+  }
+}
 
 function VideoNodeComponent({ id, data, selected }) {
   const {
@@ -46,36 +63,35 @@ function VideoNodeComponent({ id, data, selected }) {
       onClick={() => setSelectedNodeId(id === selectedNodeId ? null : id)}
       title={`Video ${id}: ${data.title} | Grado: ${degree} Me gusta`}
     >
-      {/* Handle izquierdo para conectar con usuarios */}
+      {/* Left handle for connecting from users */}
       <Handle
         type="target"
         position={Position.Left}
         id="video-target"
         style={{
-          background: '#F472B6',
+          background: '#FFFFFF',
           width: 10,
           height: 10,
-          border: '2px solid #0B0F19',
+          border: '2px solid #E11D48',
         }}
       />
-      {/* Handle source si se arrastra desde video a usuario */}
       <Handle
         type="source"
         position={Position.Left}
         id="video-source"
         style={{
-          background: '#F472B6',
+          background: '#FFFFFF',
           width: 10,
           height: 10,
-          border: '2px solid #0B0F19',
+          border: '2px solid #E11D48',
           opacity: 0,
         }}
       />
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <Video size={16} color="#F472B6" />
-          <span style={{ fontWeight: 800, fontSize: '0.9rem', color: '#F472B6', letterSpacing: '0.02em' }}>
+          {getVideoIcon(id)}
+          <span style={{ fontWeight: 900, fontSize: '0.9rem', color: '#FFFFFF', letterSpacing: '0.02em' }}>
             {id}
           </span>
         </div>
@@ -86,12 +102,13 @@ function VideoNodeComponent({ id, data, selected }) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: 3,
-              backgroundColor: '#22C55E',
-              color: '#0B0F19',
-              padding: '1px 6px',
+              backgroundColor: '#10B981',
+              color: '#FFFFFF',
+              padding: '2px 7px',
               borderRadius: 4,
               fontSize: '0.65rem',
               fontWeight: 800,
+              boxShadow: '0 0 10px rgba(16, 185, 129, 0.6)',
             }}
           >
             <Sparkles size={10} /> RECOMENDADO
@@ -101,44 +118,44 @@ function VideoNodeComponent({ id, data, selected }) {
 
       <div
         style={{
-          fontSize: '0.8rem',
-          fontWeight: 600,
+          fontSize: '0.82rem',
+          fontWeight: 700,
           color: '#FFFFFF',
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
-          maxWidth: '150px',
+          maxWidth: '160px',
         }}
       >
         {data.title}
       </div>
 
       {data.category && (
-        <div style={{ fontSize: '0.7rem', color: '#94A3B8', marginTop: 2 }}>
+        <div style={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.75)', marginTop: 2 }}>
           {data.category}
         </div>
       )}
 
-      {/* Degree Badge */}
+      {/* Degree Badge: Pure White badge with dark crimson number */}
       <div
         style={{
           position: 'absolute',
-          top: -6,
-          right: -6,
-          backgroundColor: '#0B0F19',
-          color: '#F472B6',
-          border: '1.5px solid #F472B6',
+          top: -7,
+          right: -7,
+          backgroundColor: '#FFFFFF',
+          color: '#9F1239',
+          border: '2px solid #E11D48',
           borderRadius: '9999px',
-          width: 22,
-          height: 22,
+          width: 24,
+          height: 24,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '0.7rem',
-          fontWeight: 800,
-          boxShadow: '0 2px 4px rgba(0,0,0,0.5)',
+          fontSize: '0.72rem',
+          fontWeight: 900,
+          boxShadow: '0 2px 6px rgba(0,0,0,0.5)',
         }}
-        title={`Grado: ${degree}`}
+        title={`Grado: ${degree} «Me gusta»`}
       >
         {degree}
       </div>

@@ -20,7 +20,7 @@ function UserNodeComponent({ id, data, selected }) {
   const isInActiveNeighborhood = activeConnectedNodeIds.has(id);
   const isInPath = highlightedPath.includes(id);
 
-  // Dimming logic: if something is hovered/selected/in-path, dim nodes that aren't related
+  // Dimming logic
   const hasGlobalFocus =
     (hoveredNodeId && hoveredNodeId !== id) ||
     (selectedNodeId && selectedNodeId !== id) ||
@@ -45,56 +45,55 @@ function UserNodeComponent({ id, data, selected }) {
       title={`Usuario ${data.name || id} | Grado: ${degree} conexiones`}
     >
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pointerEvents: 'none' }}>
-        <User size={18} strokeWidth={2.5} style={{ marginBottom: 2 }} />
-        <span style={{ fontSize: '1rem', fontWeight: 800, lineHeight: 1 }}>{id}</span>
+        <User size={19} color="#080A0F" strokeWidth={2.7} style={{ marginBottom: 1 }} />
+        <span style={{ fontSize: '1rem', fontWeight: 900, lineHeight: 1, color: '#080A0F' }}>{id}</span>
       </div>
 
-      {/* Badge de grado en la esquina superior derecha */}
+      {/* Degree Badge: Crimson Red pill with White text */}
       <div
         style={{
           position: 'absolute',
-          top: -6,
-          right: -6,
-          backgroundColor: '#0B0F19',
-          color: '#22D3EE',
-          border: '1.5px solid #22D3EE',
+          top: -7,
+          right: -7,
+          backgroundColor: '#E11D48',
+          color: '#FFFFFF',
+          border: '2px solid #FFFFFF',
           borderRadius: '9999px',
-          width: 22,
-          height: 22,
+          width: 24,
+          height: 24,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '0.7rem',
+          fontSize: '0.72rem',
           fontWeight: 800,
-          boxShadow: '0 2px 4px rgba(0,0,0,0.5)',
+          boxShadow: '0 2px 6px rgba(225, 29, 72, 0.6)',
         }}
-        title={`Grado: ${degree}`}
+        title={`Grado: ${degree} interacciones`}
       >
         {degree}
       </div>
 
-      {/* Handle derecho para conectar con videos */}
+      {/* Right handle to connect with videos */}
       <Handle
         type="source"
         position={Position.Right}
         id="user-source"
         style={{
-          background: '#22D3EE',
+          background: '#E11D48',
           width: 10,
           height: 10,
-          border: '2px solid #0B0F19',
+          border: '2px solid #FFFFFF',
         }}
       />
-      {/* Handle para recibir conexiones si se arrastra desde video */}
       <Handle
         type="target"
         position={Position.Right}
         id="user-target"
         style={{
-          background: '#22D3EE',
+          background: '#E11D48',
           width: 10,
           height: 10,
-          border: '2px solid #0B0F19',
+          border: '2px solid #FFFFFF',
           opacity: 0,
         }}
       />

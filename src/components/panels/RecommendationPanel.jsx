@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useGraph } from '../../context/GraphContext';
 import { calculateRecommendations } from '../../math/graphLogic';
-import { Sparkles, ThumbsUp, ArrowRight, UserCheck, Play, HelpCircle, Film } from 'lucide-react';
+import { Sparkles, ArrowRight, Play, HelpCircle } from 'lucide-react';
 
 export default function RecommendationPanel() {
   const {
@@ -28,12 +28,12 @@ export default function RecommendationPanel() {
   };
 
   return (
-    <div className="card" style={{ padding: '1.25rem' }}>
+    <div className="card" style={{ padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <div>
           <h3 style={{ fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <Sparkles size={20} color="#F472B6" />
-            Motor de Recomendación por Intereses Compartidos
+            <Sparkles size={20} color="#FE2C55" />
+            <span>Motor de Recomendación por Intereses Compartidos</span>
           </h3>
           <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: 2 }}>
             Heurística didáctica basada en trayectorias de longitud 3 a través de vecinos con gustos compartidos.
@@ -42,7 +42,7 @@ export default function RecommendationPanel() {
 
         {/* User selector */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: '0.75rem', color: '#22D3EE', fontWeight: 600 }}>Usuario objetivo:</span>
+          <span style={{ fontSize: '0.75rem', color: '#FFFFFF', fontWeight: 700 }}>Usuario objetivo:</span>
           <select
             value={selectedUserId}
             onChange={(e) => {
@@ -79,19 +79,19 @@ export default function RecommendationPanel() {
             padding: '0.75rem',
           }}
         >
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 800 }}>
             Videos que ya le gustan a {selectedUserId}
           </div>
           <div style={{ marginTop: 4, display: 'flex', flexWrap: 'wrap', gap: 4 }}>
             {recResult.likedVideos.length > 0 ? (
               recResult.likedVideos.map((vId) => (
-                <span key={vId} className="badge badge-pink" style={{ fontSize: '0.75rem' }}>
+                <span key={vId} className="badge badge-red" style={{ fontSize: '0.75rem' }}>
                   {vId}
                 </span>
               ))
             ) : (
-              <span style={{ fontSize: '0.8rem', color: '#F59E0B', fontStyle: 'italic' }}>
-                Ninguno (Usuario en frío)
+              <span style={{ fontSize: '0.8rem', color: '#FACC15', fontStyle: 'italic' }}>
+                Ninguno (Cold Start / Usuario en frío)
               </span>
             )}
           </div>
@@ -105,13 +105,13 @@ export default function RecommendationPanel() {
             padding: '0.75rem',
           }}
         >
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: 800 }}>
             Usuarios con intereses similares
           </div>
           <div style={{ marginTop: 4, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {recResult.sharedUsers && recResult.sharedUsers.length > 0 ? (
               recResult.sharedUsers.map((su) => (
-                <span key={su.userId} className="badge badge-cyan" style={{ fontSize: '0.75rem' }}>
+                <span key={su.userId} className="badge badge-white" style={{ fontSize: '0.75rem' }}>
                   {su.userId} ({su.commonCount} video{su.commonCount > 1 ? 's' : ''} en común: {su.commonVideos.join(', ')})
                 </span>
               ))
@@ -135,11 +135,11 @@ export default function RecommendationPanel() {
               <div
                 key={cand.video.id}
                 style={{
-                  backgroundColor: isTop ? 'rgba(34, 197, 94, 0.08)' : 'var(--bg-surface-card)',
+                  backgroundColor: isTop ? 'rgba(225, 29, 72, 0.10)' : 'var(--bg-surface-card)',
                   border: isCurrentlySelected
-                    ? '2px solid #22C55E'
+                    ? '2px solid #10B981'
                     : isTop
-                    ? '1px solid rgba(34, 197, 94, 0.35)'
+                    ? '1.5px solid #FE2C55'
                     : '1px solid var(--border-subtle)',
                   borderRadius: 'var(--radius-md)',
                   padding: '1rem',
@@ -150,20 +150,20 @@ export default function RecommendationPanel() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <span
                       style={{
-                        backgroundColor: isTop ? '#22C55E' : '#334155',
-                        color: isTop ? '#0B0F19' : '#FFFFFF',
-                        fontWeight: 800,
-                        fontSize: '0.75rem',
+                        backgroundColor: isTop ? '#FE2C55' : '#334155',
+                        color: '#FFFFFF',
+                        fontWeight: 900,
+                        fontSize: '0.72rem',
                         padding: '2px 8px',
                         borderRadius: 'var(--radius-full)',
                       }}
                     >
-                      {isTop ? '★ MEJOR RECOMENDACIÓN' : `#${index + 1}`}
+                      {isTop ? '★ RECOMENDACIÓN TOP' : `#${index + 1}`}
                     </span>
                     <strong style={{ fontSize: '1rem', color: '#FFFFFF' }}>
                       {cand.video.id}: {cand.video.title}
                     </strong>
-                    <span className="badge badge-purple">Puntuación: {cand.score}</span>
+                    <span className="badge badge-white">Puntuación: {cand.score}</span>
                   </div>
 
                   <button
@@ -179,7 +179,7 @@ export default function RecommendationPanel() {
                 {/* Justification trajectory */}
                 <div
                   style={{
-                    backgroundColor: 'rgba(11, 15, 25, 0.6)',
+                    backgroundColor: 'rgba(8, 10, 15, 0.7)',
                     borderRadius: 'var(--radius-sm)',
                     padding: '8px 12px',
                     margin: '8px 0',
@@ -189,23 +189,26 @@ export default function RecommendationPanel() {
                     alignItems: 'center',
                     gap: 8,
                     flexWrap: 'wrap',
+                    border: '1px solid var(--border-subtle)',
                   }}
                 >
-                  <span style={{ color: '#94A3B8', fontSize: '0.75rem', fontWeight: 600 }}>Trayectoria justificativa:</span>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 700 }}>
+                    Trayectoria justificativa:
+                  </span>
                   {cand.justificationPath.map((node, nIdx) => (
                     <React.Fragment key={nIdx}>
                       <span
                         style={{
-                          color: node.startsWith('V') ? '#F472B6' : '#22D3EE',
-                          fontWeight: 700,
+                          color: node.startsWith('V') ? '#FE2C55' : '#FFFFFF',
+                          fontWeight: 800,
                         }}
                       >
                         {node}
                       </span>
-                      {nIdx < cand.justificationPath.length - 1 && <ArrowRight size={14} color="#94A3B8" />}
+                      {nIdx < cand.justificationPath.length - 1 && <ArrowRight size={14} color="#64748B" />}
                     </React.Fragment>
                   ))}
-                  <span className="badge badge-cyan" style={{ fontSize: '0.7rem' }}>
+                  <span className="badge badge-amber" style={{ fontSize: '0.7rem' }}>
                     Longitud: {cand.pathLength}
                   </span>
                 </div>
@@ -221,13 +224,13 @@ export default function RecommendationPanel() {
         <div
           style={{
             backgroundColor: 'rgba(245, 158, 11, 0.08)',
-            border: '1px solid rgba(245, 158, 11, 0.25)',
+            border: '1px solid rgba(245, 158, 11, 0.3)',
             borderRadius: 'var(--radius-md)',
             padding: '1.25rem',
             textAlign: 'center',
           }}
         >
-          <div style={{ fontWeight: 700, color: '#F59E0B', fontSize: '0.95rem', marginBottom: 4 }}>
+          <div style={{ fontWeight: 800, color: '#FACC15', fontSize: '0.95rem', marginBottom: 4 }}>
             No hay recomendaciones basadas en intereses compartidos
           </div>
           <div style={{ fontSize: '0.8125rem', color: '#CBD5E1', maxWidth: '500px', margin: '0 auto' }}>
@@ -236,12 +239,12 @@ export default function RecommendationPanel() {
         </div>
       )}
 
-      {/* Accordion / Formula explanation */}
+      {/* Accordion explanation */}
       <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem', marginTop: '1rem' }}>
         <button
           onClick={() => setShowFormulaDetails(!showFormulaDetails)}
           className="btn btn-ghost btn-sm"
-          style={{ color: '#22D3EE', padding: '4px 8px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: 6 }}
+          style={{ color: '#FE2C55', padding: '4px 8px', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: 6 }}
         >
           <HelpCircle size={14} />
           <span>{showFormulaDetails ? 'Ocultar detalles de la fórmula' : '¿Cómo se calculó la puntuación de similitud?'}</span>
@@ -261,20 +264,17 @@ export default function RecommendationPanel() {
             }}
           >
             <p style={{ marginBottom: '0.5rem', fontFamily: 'Fira Code', color: '#FFFFFF' }}>
-              Puntuación(U, V) = Σ [para cada U' ≠ U que interactuó con V] |Videos_comunes(U, U')|
+              Puntuación(U, V) = ∑ [para cada U' ≠ U que interactuó con V] |Videos_comunes(U, U')|
             </p>
             <p style={{ marginBottom: '0.5rem' }}>
-              Para el <strong style={{ color: '#22D3EE' }}>Usuario A</strong> y el <strong style={{ color: '#F472B6' }}>Video V3</strong>:
+              Para el <strong style={{ color: '#FFFFFF' }}>Usuario A</strong> y el <strong style={{ color: '#FE2C55' }}>Video V3</strong>:
             </p>
             <ul style={{ paddingLeft: '1.25rem', marginBottom: '0.5rem' }}>
-              <li>Usuarios que le dieron Me gusta a V3: B y C.</li>
-              <li>A y B comparten 2 videos en común (V1 y V2). Aporte de B: +2 puntos.</li>
-              <li>A y C comparten 0 videos en común. Aporte de C: +0 puntos.</li>
-              <li><strong style={{ color: '#22C55E' }}>Puntuación total para V3 = 2 + 0 = 2 puntos.</strong></li>
+              <li>Usuarios que interactuaron con V3: B y C.</li>
+              <li>A y B comparten 2 videos (V1 y V2). Aporte de B: +2 puntos.</li>
+              <li>A y C comparten 0 videos. Aporte de C: +0 puntos.</li>
+              <li><strong style={{ color: '#10B981' }}>Puntuación total para V3 = 2 + 0 = 2 puntos.</strong></li>
             </ul>
-            <p style={{ fontStyle: 'italic', color: '#94A3B8' }}>
-              Esta fórmula es un modelo pedagógico simplificado para ilustrar el uso de caminos de longitud 3 en grafos bipartitos. No reproduce el algoritmo de producción real de TikTok.
-            </p>
           </div>
         )}
       </div>

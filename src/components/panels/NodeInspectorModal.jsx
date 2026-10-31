@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useGraph } from '../../context/GraphContext';
-import { User, Video, X, Trash2, Edit2, Link2, Check, AlertCircle } from 'lucide-react';
+import { User, Video, X, Trash2, Edit2, Link2, Check } from 'lucide-react';
 
 export default function NodeInspectorModal() {
   const {
@@ -87,22 +87,23 @@ export default function NodeInspectorModal() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: isUser ? 'rgba(34, 211, 238, 0.08)' : 'rgba(244, 114, 182, 0.08)',
+            backgroundColor: isUser ? 'rgba(255, 255, 255, 0.08)' : 'rgba(225, 29, 72, 0.12)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {isUser ? (
               <div
                 style={{
-                  width: 36,
-                  height: 36,
+                  width: 38,
+                  height: 38,
                   borderRadius: '50%',
-                  backgroundColor: '#22D3EE',
-                  color: '#0B0F19',
+                  backgroundColor: '#FFFFFF',
+                  color: '#080A0F',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontWeight: 800,
+                  fontWeight: 900,
+                  boxShadow: '0 0 12px rgba(255, 255, 255, 0.4)',
                 }}
               >
                 <User size={20} />
@@ -110,15 +111,16 @@ export default function NodeInspectorModal() {
             ) : (
               <div
                 style={{
-                  width: 36,
-                  height: 36,
+                  width: 38,
+                  height: 38,
                   borderRadius: 'var(--radius-sm)',
-                  backgroundColor: '#F472B6',
-                  color: '#0B0F19',
+                  backgroundColor: '#FE2C55',
+                  color: '#FFFFFF',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontWeight: 800,
+                  fontWeight: 900,
+                  boxShadow: '0 0 12px rgba(254, 44, 85, 0.5)',
                 }}
               >
                 <Video size={20} />
@@ -127,7 +129,7 @@ export default function NodeInspectorModal() {
             <div>
               <h3 style={{ fontSize: '1.1rem', color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: 8 }}>
                 {isUser ? `Usuario ${node.id}` : `Video ${node.id}`}
-                <span className={isUser ? 'badge badge-cyan' : 'badge badge-pink'}>
+                <span className={isUser ? 'badge badge-white' : 'badge badge-red'}>
                   Grado: {nodeDegreeInfo?.degree || 0}
                 </span>
               </h3>
@@ -148,7 +150,6 @@ export default function NodeInspectorModal() {
 
         {/* Content Body */}
         <div style={{ padding: '1.25rem' }}>
-          {/* Edit Form or Info View */}
           {isEditing ? (
             <div style={{ marginBottom: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <div>
@@ -199,7 +200,7 @@ export default function NodeInspectorModal() {
                   lineHeight: 1.45,
                 }}
               >
-                <strong style={{ color: isUser ? '#22D3EE' : '#F472B6' }}>Explicación topológica:</strong>{' '}
+                <strong style={{ color: isUser ? '#FFFFFF' : '#FE2C55' }}>Explicación topológica:</strong>{' '}
                 {nodeDegreeInfo?.explanation}
               </div>
 
@@ -221,7 +222,7 @@ export default function NodeInspectorModal() {
           {/* Connected Edges List */}
           <div style={{ marginBottom: '1.25rem' }}>
             <h4 style={{ fontSize: '0.875rem', color: 'var(--text-primary)', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
-              <Link2 size={16} color="#38BDF8" />
+              <Link2 size={16} color="#FE2C55" />
               Conexiones existentes ({connectedEdges.length}):
             </h4>
 

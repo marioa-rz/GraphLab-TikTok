@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { academicContext } from '../../data/academicContext';
-import { GraduationCap, Users, BookOpen, ExternalLink, ShieldCheck } from 'lucide-react';
+import { GraduationCap, Users, BookOpen, ShieldCheck } from 'lucide-react';
 
 export default function Footer() {
   const [showReferences, setShowReferences] = useState(false);
@@ -8,13 +8,13 @@ export default function Footer() {
   return (
     <footer
       style={{
-        backgroundColor: '#070A12',
+        backgroundColor: '#05070B',
         borderTop: '1px solid var(--border-subtle)',
         padding: '2.5rem 1.25rem 2rem',
         marginTop: 'auto',
       }}
     >
-      <div style={{ maxWidth: '1440px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '1540px', margin: '0 auto' }}>
         <div
           style={{
             display: 'grid',
@@ -26,8 +26,8 @@ export default function Footer() {
           {/* Institutional Info */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '0.75rem' }}>
-              <GraduationCap size={20} color="#22D3EE" />
-              <h4 style={{ fontSize: '0.95rem', color: '#FFFFFF', fontWeight: 700 }}>
+              <GraduationCap size={20} color="#FE2C55" />
+              <h4 style={{ fontSize: '0.95rem', color: '#FFFFFF', fontWeight: 800 }}>
                 {academicContext.university}
               </h4>
             </div>
@@ -35,8 +35,8 @@ export default function Footer() {
               {academicContext.faculty} — Curso de {academicContext.course}.
             </p>
             <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
-              Docente: <strong style={{ color: '#FFFFFF' }}>{academicContext.professor}</strong> | Sección:{' '}
-              <strong style={{ color: '#22D3EE' }}>{academicContext.section}</strong>
+              Catedrático: <strong style={{ color: '#FFFFFF' }}>{academicContext.professor}</strong> | Sección:{' '}
+              <strong style={{ color: '#FE2C55' }}>{academicContext.section}</strong>
             </p>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
               Fecha de entrega: {academicContext.deliveryDate}
@@ -46,8 +46,8 @@ export default function Footer() {
           {/* Authors */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '0.75rem' }}>
-              <Users size={20} color="#F472B6" />
-              <h4 style={{ fontSize: '0.95rem', color: '#FFFFFF', fontWeight: 700 }}>
+              <Users size={20} color="#FFFFFF" />
+              <h4 style={{ fontSize: '0.95rem', color: '#FFFFFF', fontWeight: 800 }}>
                 Integrantes del Proyecto
               </h4>
             </div>
@@ -55,23 +55,23 @@ export default function Footer() {
               {academicContext.authors.map((author) => (
                 <li key={author.id} style={{ display: 'flex', justifyContent: 'space-between', color: '#E2E8F0' }}>
                   <span>{author.name}</span>
-                  <span style={{ fontFamily: 'Fira Code', color: '#F472B6', fontSize: '0.75rem' }}>
+                  <span style={{ fontFamily: 'Fira Code', color: '#FE2C55', fontSize: '0.75rem', fontWeight: 700 }}>
                     {author.id}
                   </span>
                 </li>
               ))}
             </ul>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
-              Participación equitativa del 100% en todas las fases del trabajo.
+              Participación equitativa del 100% en todas las etapas del trabajo.
             </p>
           </div>
 
           {/* Academic Topic & References */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: '0.75rem' }}>
-              <BookOpen size={20} color="#A855F7" />
-              <h4 style={{ fontSize: '0.95rem', color: '#FFFFFF', fontWeight: 700 }}>
-                Marco Teórico y Referencias
+              <BookOpen size={20} color="#FE2C55" />
+              <h4 style={{ fontSize: '0.95rem', color: '#FFFFFF', fontWeight: 800 }}>
+                Marco Teórico y Bibliografía
               </h4>
             </div>
             <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '0.75rem' }}>
@@ -80,7 +80,7 @@ export default function Footer() {
             <button
               onClick={() => setShowReferences(!showReferences)}
               className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.75rem', padding: '4px 10px' }}
+              style={{ fontSize: '0.75rem', padding: '4px 10px', color: '#FFFFFF' }}
             >
               {showReferences ? 'Ocultar bibliografía' : 'Ver referencias bibliográficas'}
             </button>
@@ -99,7 +99,7 @@ export default function Footer() {
               animation: 'fadeIn 0.2s ease-out',
             }}
           >
-            <h5 style={{ fontSize: '0.875rem', color: '#FFFFFF', marginBottom: 10 }}>
+            <h5 style={{ fontSize: '0.875rem', color: '#FFFFFF', marginBottom: 10, fontWeight: 700 }}>
               Referencias Bibliográficas (Formato APA):
             </h5>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
@@ -111,7 +111,7 @@ export default function Footer() {
                       href={ref.url}
                       target="_blank"
                       rel="noreferrer"
-                      style={{ color: '#22D3EE', textDecoration: 'underline' }}
+                      style={{ color: '#FE2C55', textDecoration: 'underline' }}
                     >
                       Enlace
                     </a>
@@ -121,7 +121,7 @@ export default function Footer() {
                       href={ref.doi}
                       target="_blank"
                       rel="noreferrer"
-                      style={{ color: '#22D3EE', textDecoration: 'underline' }}
+                      style={{ color: '#FE2C55', textDecoration: 'underline' }}
                     >
                       {ref.doi}
                     </a>
@@ -147,7 +147,7 @@ export default function Footer() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <ShieldCheck size={16} color="#22C55E" />
+            <ShieldCheck size={16} color="#10B981" />
             <span>
               Herramienta académica desarrollada para fines de aprendizaje en Matemática Discreta. No asociada con ByteDance / TikTok Inc.
             </span>
