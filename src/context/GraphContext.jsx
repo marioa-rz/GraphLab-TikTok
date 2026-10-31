@@ -32,6 +32,25 @@ export function GraphProvider({ children }) {
   const [highlightedPath, setHighlightedPath] = useState([]);
   const [recommendedNodeId, setRecommendedNodeId] = useState(null);
 
+  // Inspector / Editor modal explícito
+  const [isInspectorModalOpen, setIsInspectorModalOpen] = useState(false);
+  const [inspectorNodeId, setInspectorNodeId] = useState(null);
+
+  const openNodeInspector = useCallback((nodeId) => {
+    if (!nodeId) return;
+    setInspectorNodeId(nodeId);
+    setSelectedNodeId(nodeId);
+    setIsInspectorModalOpen(true);
+  }, []);
+
+  const closeNodeInspector = useCallback(() => {
+    setIsInspectorModalOpen(false);
+    setInspectorNodeId(null);
+  }, []);
+
+  // Pestaña activa del Laboratorio ('recommendations' | 'paths' | 'math' | 'cycles')
+  const [activeLabTab, setActiveLabTab] = useState('recommendations');
+
   // Registro de interacción previa para comparador Antes / Después
   const [lastDiff, setLastDiff] = useState(null);
 
@@ -454,6 +473,14 @@ export function GraphProvider({ children }) {
         hoveredNodeId,
         highlightedPath,
         recommendedNodeId,
+        isInspectorModalOpen,
+        setIsInspectorModalOpen,
+        inspectorNodeId,
+        setInspectorNodeId,
+        openNodeInspector,
+        closeNodeInspector,
+        activeLabTab,
+        setActiveLabTab,
         activeConnectedNodeIds,
         activeConnectedEdgeIds,
         highlightedEdgeIds,

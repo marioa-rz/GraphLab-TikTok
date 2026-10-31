@@ -18,9 +18,12 @@ import {
   X,
   RotateCcw,
   Trash2,
+  ArrowLeft,
+  Presentation,
+  Settings2,
 } from 'lucide-react';
 
-export default function InteractiveLabView() {
+export default function InteractiveLabView({ setActiveView }) {
   const {
     users,
     videos,
@@ -30,9 +33,11 @@ export default function InteractiveLabView() {
     resetToOriginal,
     clearGraph,
     resetNodeDistribution,
+    activeLabTab,
+    setActiveLabTab,
+    selectedNodeId,
+    openNodeInspector,
   } = useGraph();
-
-  const [activePanelTab, setActivePanelTab] = useState('recommendations'); // 'recommendations' | 'paths' | 'math' | 'cycles'
 
   // Modals para agregar usuario, video o interacción
   const [showAddUserModal, setShowAddUserModal] = useState(false);
@@ -91,7 +96,18 @@ export default function InteractiveLabView() {
         }}
       >
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            {setActiveView && (
+              <button
+                onClick={() => setActiveView('home')}
+                className="btn btn-secondary btn-sm"
+                style={{ padding: '4px 10px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: 5 }}
+                title="Volver a la página principal"
+              >
+                <ArrowLeft size={13} />
+                <span>Inicio</span>
+              </button>
+            )}
             <span className="badge badge-red">Laboratorio Abierto</span>
             <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
               Experimentación en Tiempo Real
@@ -103,7 +119,18 @@ export default function InteractiveLabView() {
         </div>
 
         {/* Action Buttons Toolbar in Red & White */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+          {selectedNodeId && (
+            <button
+              onClick={() => openNodeInspector(selectedNodeId)}
+              className="btn btn-secondary btn-sm"
+              style={{ color: '#FACC15', border: '1.5px solid #FACC15', backgroundColor: 'rgba(250, 204, 21, 0.1)' }}
+              title={`Inspeccionar o editar el vértice ${selectedNodeId}`}
+            >
+              <Settings2 size={14} /> Inspeccionar {selectedNodeId}
+            </button>
+          )}
+
           <button
             onClick={() => setShowAddUserModal(true)}
             className="btn btn-secondary btn-sm"
@@ -126,6 +153,18 @@ export default function InteractiveLabView() {
           >
             <Share2 size={14} /> + Interacción
           </button>
+
+          {setActiveView && (
+            <button
+              onClick={() => setActiveView('presentation')}
+              className="btn btn-secondary btn-sm hide-on-mobile"
+              style={{ color: '#FE2C55', border: '1px solid #FE2C55' }}
+              title="Abrir Modo Exposición con diapositivas"
+            >
+              <Presentation size={14} />
+              <span>Modo Exposición</span>
+            </button>
+          )}
 
           <button
             onClick={resetToOriginal}
@@ -207,9 +246,9 @@ export default function InteractiveLabView() {
             }}
           >
             <button
-              onClick={() => setActivePanelTab('recommendations')}
+              onClick={() => setActiveLabTab('recommendations')}
               className={`btn btn-sm ${
-                activePanelTab === 'recommendations' ? 'btn-primary' : 'btn-ghost'
+                activeLabTab === 'recommendations' ? 'btn-primary' : 'btn-ghost'
               }`}
               style={{ padding: '6px 12px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
             >
@@ -217,9 +256,9 @@ export default function InteractiveLabView() {
             </button>
 
             <button
-              onClick={() => setActivePanelTab('paths')}
+              onClick={() => setActiveLabTab('paths')}
               className={`btn btn-sm ${
-                activePanelTab === 'paths' ? 'btn-primary' : 'btn-ghost'
+                activeLabTab === 'paths' ? 'btn-primary' : 'btn-ghost'
               }`}
               style={{ padding: '6px 12px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
             >
@@ -227,9 +266,9 @@ export default function InteractiveLabView() {
             </button>
 
             <button
-              onClick={() => setActivePanelTab('math')}
+              onClick={() => setActiveLabTab('math')}
               className={`btn btn-sm ${
-                activePanelTab === 'math' ? 'btn-primary' : 'btn-ghost'
+                activeLabTab === 'math' ? 'btn-primary' : 'btn-ghost'
               }`}
               style={{ padding: '6px 12px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
             >
@@ -237,9 +276,9 @@ export default function InteractiveLabView() {
             </button>
 
             <button
-              onClick={() => setActivePanelTab('cycles')}
+              onClick={() => setActiveLabTab('cycles')}
               className={`btn btn-sm ${
-                activePanelTab === 'cycles' ? 'btn-primary' : 'btn-ghost'
+                activeLabTab === 'cycles' ? 'btn-primary' : 'btn-ghost'
               }`}
               style={{ padding: '6px 12px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
             >
@@ -248,27 +287,27 @@ export default function InteractiveLabView() {
           </div>
 
           {/* Tab Content Display */}
-          {activePanelTab === 'recommendations' && (
+          {activeLabTab === 'recommendations' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <NewInteractionSimulator />
               <RecommendationPanel />
             </div>
           )}
 
-          {activePanelTab === 'paths' && (
+          {activeLabTab === 'paths' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <PathFinderPanel />
             </div>
           )}
 
-          {activePanelTab === 'math' && (
+          {activeLabTab === 'math' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <HandshakingLemmaPanel />
               <DegreeTablesPanel />
             </div>
           )}
 
-          {activePanelTab === 'cycles' && (
+          {activeLabTab === 'cycles' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <RepetitiveConsumptionPanel />
             </div>

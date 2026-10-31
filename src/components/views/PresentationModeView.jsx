@@ -10,6 +10,10 @@ import {
   XCircle,
   Sparkles,
   Heart,
+  ArrowLeft,
+  Home,
+  RotateCcw,
+  FlaskConical,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -269,15 +273,40 @@ export default function PresentationModeView({ setActiveView }) {
             </li>
           </ul>
 
-          <div style={{ marginTop: '1.25rem', textAlign: 'center' }}>
+          <div style={{ marginTop: '1.25rem', display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
             <button
               onClick={() => {
                 confetti({ particleCount: 80, spread: 90, origin: { y: 0.7 }, colors: ['#FE2C55', '#FFFFFF', '#10B981'] });
               }}
               className="btn btn-primary btn-lg"
+              style={{ width: '100%' }}
             >
               <Sparkles size={18} /> ¡Agradecemos su atención!
             </button>
+
+            <div style={{ display: 'flex', gap: 8, width: '100%', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setActiveView('home')}
+                className="btn btn-secondary btn-sm"
+                style={{ flex: 1, minWidth: '120px' }}
+              >
+                <Home size={14} /> Volver a Inicio
+              </button>
+              <button
+                onClick={() => setActiveView('lab')}
+                className="btn btn-white btn-sm"
+                style={{ flex: 1, minWidth: '120px' }}
+              >
+                <FlaskConical size={14} /> Ir al Laboratorio
+              </button>
+              <button
+                onClick={() => setCurrentSlide(0)}
+                className="btn btn-ghost btn-sm"
+                style={{ flex: 1, minWidth: '120px', color: '#FE2C55' }}
+              >
+                <RotateCcw size={14} /> Reiniciar Diapositivas
+              </button>
+            </div>
           </div>
         </div>
       ),
@@ -348,7 +377,16 @@ export default function PresentationModeView({ setActiveView }) {
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+          <button
+            onClick={() => setActiveView('home')}
+            className="btn btn-secondary btn-sm"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
+            title="Volver a la página principal"
+          >
+            <ArrowLeft size={15} /> <span>Volver a Inicio</span>
+          </button>
+
           <button
             onClick={() => setCurrentSlide((prev) => Math.max(0, prev - 1))}
             disabled={currentSlide === 0}

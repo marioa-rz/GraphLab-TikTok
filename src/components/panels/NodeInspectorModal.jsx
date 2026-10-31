@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGraph } from '../../context/GraphContext';
 import { User, Video, X, Trash2, Edit2, Link2, Check } from 'lucide-react';
 
 export default function NodeInspectorModal() {
   const {
-    selectedNodeId,
-    setSelectedNodeId,
+    isInspectorModalOpen,
+    inspectorNodeId,
+    closeNodeInspector,
     users,
     videos,
     edges,
@@ -23,21 +24,34 @@ export default function NodeInspectorModal() {
   const [editCategory, setEditCategory] = useState('');
   const [connectTargetId, setConnectTargetId] = useState('');
 
-  if (!selectedNodeId) return null;
+  // Cerrar modal al presionar Escape
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeNodeInspector();
+      }
+    };
+    if (isInspectorModalOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isInspectorModalOpen, closeNodeInspector]);
 
-  const user = users.find((u) => u.id === selectedNodeId);
-  const video = videos.find((v) => v.id === selectedNodeId);
+  if (!isInspectorModalOpen || !inspectorNodeId) return null;
+
+  const user = users.find((u) => u.id === inspectorNodeId);
+  const video = videos.find((v) => v.id === inspectorNodeId);
   const isUser = Boolean(user);
   const node = user || video;
 
   if (!node) return null;
 
   const nodeDegreeInfo = isUser
-    ? degrees.users.find((u) => u.id === selectedNodeId)
-    : degrees.videos.find((v) => v.id === selectedNodeId);
+    ? degrees.users.find((u) => u.id === inspectorNodeId)
+    : degrees.videos.find((v) => v.id === inspectorNodeId);
 
   const connectedEdges = edges.filter(
-    (e) => e.source === selectedNodeId || e.target === selectedNodeId
+    (e) => e.source === inspectorNodeId || e.target === inspectorNodeId
   );
 
   const candidateConnectNodes = isUser ? videos : users;
@@ -67,17 +81,17 @@ export default function NodeInspectorModal() {
     } else {
       deleteVideo(video.id);
     }
-    setSelectedNodeId(null);
+    closeNodeInspector();
   };
 
   const handleConnect = () => {
     if (!connectTargetId) return;
-    addEdge(selectedNodeId, connectTargetId);
+    addEdge(inspectorNodeId, connectTargetId);
     setConnectTargetId('');
   };
 
   return (
-    <div className="modal-backdrop" onClick={() => setSelectedNodeId(null)}>
+    <div className="modal-backdrop" onClick={closeNodeInspector}>
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div
@@ -140,9 +154,10 @@ export default function NodeInspectorModal() {
           </div>
 
           <button
-            onClick={() => setSelectedNodeId(null)}
+            onClick={closeNodeInspector}
             className="btn btn-ghost btn-sm"
             style={{ borderRadius: '50%', width: 32, height: 32, padding: 0 }}
+            title="Cerrar modal"
           >
             <X size={18} />
           </button>
@@ -268,10 +283,10 @@ export default function NodeInspectorModal() {
           {/* Quick Connect to another bipartite vertex */}
           <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem' }}>
             <h4 style={{ fontSize: '0.875rem', color: 'var(--text-primary)', marginBottom: 8 }}>
-              Agregar nueva conexión para {selectedNodeId}:
+              Agregar nueva conexión para {inspectorNodeId}:
             </h4>
 
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 8, marginBottom: '1.25rem' }}>
               <select
                 value={connectTargetId}
                 onChange={(e) => setConnectTargetId(e.target.value)}
@@ -291,6 +306,17 @@ export default function NodeInspectorModal() {
                 className="btn btn-primary btn-sm"
               >
                 Conectar
+              </button>
+            </div>
+
+            {/* Modal Bottom Close Action */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid var(--border-subtle)', paddingTop: '0.75rem' }}>
+              <button
+                onClick={closeNodeInspector}
+                className="btn btn-secondary btn-sm"
+                style={{ padding: '6px 18px' }}
+              >
+                Cerrar inspector
               </button>
             </div>
           </div>

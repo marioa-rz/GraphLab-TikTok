@@ -13,6 +13,8 @@ import {
   TrendingUp,
   Sparkles,
   CheckCircle2,
+  ArrowLeft,
+  Home,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -192,7 +194,17 @@ export default function GuidedSimulationView({ setActiveView }) {
         </div>
 
         {/* Navigation Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+          <button
+            onClick={() => setActiveView('home')}
+            className="btn btn-secondary btn-sm"
+            style={{ padding: '6px 12px', display: 'inline-flex', alignItems: 'center', gap: 5 }}
+            title="Volver a la página principal"
+          >
+            <ArrowLeft size={15} />
+            <span>Volver a Inicio</span>
+          </button>
+
           <button
             onClick={handlePrev}
             disabled={currentStep === 1}
@@ -409,18 +421,27 @@ export default function GuidedSimulationView({ setActiveView }) {
             </div>
           )}
 
-          {/* Quick jump to lab */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem' }}>
+          {/* Quick jump to lab or home */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem', flexWrap: 'wrap', gap: 8 }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
               ¿Deseas experimentar libremente?
             </span>
-            <button
-              onClick={() => setActiveView('lab')}
-              className="btn btn-secondary btn-sm"
-              style={{ fontSize: '0.75rem', padding: '4px 10px' }}
-            >
-              Ir al Laboratorio
-            </button>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button
+                onClick={() => setActiveView('home')}
+                className="btn btn-ghost btn-sm"
+                style={{ fontSize: '0.75rem', padding: '4px 10px' }}
+              >
+                Volver a Inicio
+              </button>
+              <button
+                onClick={() => setActiveView('lab')}
+                className="btn btn-secondary btn-sm"
+                style={{ fontSize: '0.75rem', padding: '4px 10px' }}
+              >
+                Ir al Laboratorio
+              </button>
+            </div>
           </div>
         </div>
 

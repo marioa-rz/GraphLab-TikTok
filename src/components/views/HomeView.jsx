@@ -16,7 +16,22 @@ import {
 } from 'lucide-react';
 
 export default function HomeView({ setActiveView }) {
-  const { lemma, users, videos, edges } = useGraph();
+  const { lemma, users, videos, edges, setActiveLabTab, setHighlightedPath } = useGraph();
+
+  const handleOpenTheory = (e, theoryId) => {
+    e.stopPropagation();
+    setActiveView('theory');
+    setTimeout(() => {
+      const el = document.getElementById(theoryId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        el.style.boxShadow = '0 0 25px rgba(254, 44, 85, 0.6)';
+        setTimeout(() => {
+          if (el) el.style.boxShadow = '';
+        }, 2200);
+      }
+    }, 150);
+  };
 
   const concepts = [
     {
@@ -24,36 +39,70 @@ export default function HomeView({ setActiveView }) {
       desc: 'Dos conjuntos disjuntos de vértices (Usuarios y Videos). Ninguna arista une dos elementos del mismo grupo.',
       icon: Layers,
       color: '#FFFFFF',
+      action: () => setActiveView('guided'),
+      actionLabel: 'Ver simulación guiada',
+      theoryId: 'concept-bipartito',
     },
     {
       title: 'Vértices y Aristas',
       desc: 'Los puntos representan usuarios y videos; las líneas representan una interacción directa de «Me gusta».',
       icon: Share2,
       color: '#FE2C55',
+      action: () => {
+        setActiveLabTab('recommendations');
+        setActiveView('lab');
+      },
+      actionLabel: 'Explorar en Laboratorio',
+      theoryId: 'concept-vertices',
     },
     {
       title: 'Grado de un Vértice',
       desc: 'Cantidad de conexiones de un punto: cuántos videos le gustaron a un usuario o cuántos likes recibió un video.',
       icon: Users,
       color: '#FFFFFF',
+      action: () => {
+        setActiveLabTab('math');
+        setActiveView('lab');
+      },
+      actionLabel: 'Ver tabla de grados en Lab',
+      theoryId: 'concept-grado',
     },
     {
       title: 'Lema del Apretón de Manos',
       desc: 'La suma de todos los grados siempre duplica el número de aristas: ∑ deg(v) = 2 · |E| (18 = 2 × 9).',
       icon: Calculator,
       color: '#10B981',
+      action: () => {
+        setActiveLabTab('math');
+        setActiveView('lab');
+      },
+      actionLabel: 'Calculadora Euler en vivo',
+      theoryId: 'concept-euler',
     },
     {
       title: 'Trayectorias y Longitud',
       desc: 'Caminos de longitud 2 entre usuarios para identificar intereses comunes (A → V1 → B y A → V2 → B).',
       icon: Compass,
       color: '#FACC15',
+      action: () => {
+        setActiveLabTab('paths');
+        setHighlightedPath(['A', 'V1', 'B']);
+        setActiveView('lab');
+      },
+      actionLabel: 'Analizar trayectorias BFS',
+      theoryId: 'concept-trayectorias',
     },
     {
       title: 'Motor de Recomendaciones',
       desc: 'Trayectorias de longitud 3 que conectan un usuario objetivo con un video no visto mediante vecinos similares.',
       icon: Sparkles,
       color: '#FE2C55',
+      action: () => {
+        setActiveLabTab('recommendations');
+        setActiveView('lab');
+      },
+      actionLabel: 'Simulador de recomendaciones',
+      theoryId: 'concept-recomendaciones',
     },
   ];
 
@@ -231,31 +280,76 @@ export default function HomeView({ setActiveView }) {
               <div
                 key={idx}
                 className="card card-interactive"
-                style={{ padding: '1.5rem', cursor: 'pointer' }}
-                onClick={() => setActiveView('theory')}
+                style={{
+                  padding: '1.5rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.2s, border-color 0.2s, box-shadow 0.2s',
+                }}
+                onClick={concept.action}
               >
-                <div
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 'var(--radius-md)',
-                    backgroundColor: 'rgba(225, 29, 72, 0.12)',
-                    color: concept.color,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '1rem',
-                    border: '1px solid var(--border-red)',
-                  }}
-                >
-                  <Icon size={22} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                  <div
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: 'var(--radius-md)',
+                      backgroundColor: 'rgba(225, 29, 72, 0.12)',
+                      color: concept.color,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: '1px solid var(--border-red)',
+                    }}
+                  >
+                    <Icon size={22} />
+                  </div>
+
+                  <span
+                    onClick={(e) => handleOpenTheory(e, concept.theoryId)}
+                    style={{
+                      fontSize: '0.75rem',
+                      color: 'var(--text-secondary)',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                      padding: '2px 6px',
+                    }}
+                    title="Ver explicación formal en Fundamentos Teóricos"
+                  >
+                    📖 Ver Teoría
+                  </span>
                 </div>
+
                 <h3 style={{ fontSize: '1.15rem', color: '#FFFFFF', marginBottom: '0.5rem' }}>
                   {concept.title}
                 </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '1.25rem' }}>
                   {concept.desc}
                 </p>
+
+                <div style={{ marginTop: 'auto' }}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      concept.action();
+                    }}
+                    className="btn btn-secondary btn-sm"
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 6,
+                      fontSize: '0.8rem',
+                      color: concept.color,
+                      borderColor: `${concept.color}50`,
+                    }}
+                  >
+                    <span>{concept.actionLabel}</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </div>
               </div>
             );
           })}

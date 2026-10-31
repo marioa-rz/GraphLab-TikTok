@@ -36,6 +36,7 @@ function FlowGraphInner({ height = 'clamp(440px, 62vh, 620px)', interactive = tr
     setRecommendedNodeId,
     setSelectedNodeId,
     setSelectedEdgeId,
+    openNodeInspector,
   } = useGraph();
 
   const reactFlowInstance = useReactFlow();
@@ -118,6 +119,7 @@ function FlowGraphInner({ height = 'clamp(440px, 62vh, 620px)', interactive = tr
         edgeTypes={edgeTypes}
         onConnect={onConnect}
         onNodeDragStop={onNodeDragStop}
+        onNodeDoubleClick={(_, node) => openNodeInspector(node.id)}
         fitView
         fitViewOptions={{ padding: 0.22 }}
         minZoom={0.25}

@@ -26,7 +26,7 @@ function AppContent() {
       <main className="main-content">
         {activeView === 'home' && <HomeView setActiveView={setActiveView} />}
         {activeView === 'guided' && <GuidedSimulationView setActiveView={setActiveView} />}
-        {activeView === 'lab' && <InteractiveLabView />}
+        {activeView === 'lab' && <InteractiveLabView setActiveView={setActiveView} />}
         {activeView === 'theory' && <MathFoundationsView setActiveView={setActiveView} />}
         {activeView === 'presentation' && <PresentationModeView setActiveView={setActiveView} />}
       </main>
