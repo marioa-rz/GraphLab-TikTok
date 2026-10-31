@@ -60,61 +60,143 @@ export default function Navbar({ activeView, setActiveView, onOpenScenarios }) {
           position: 'sticky',
           top: 0,
           zIndex: 50,
-          backgroundColor: 'rgba(8, 10, 15, 0.92)',
-          backdropFilter: 'blur(14px)',
+          backgroundColor: 'rgba(8, 10, 15, 0.94)',
+          backdropFilter: 'blur(16px)',
           borderBottom: '1px solid var(--border-subtle)',
+          padding: '0.6rem 0.875rem',
         }}
       >
         <div
           style={{
             maxWidth: '1540px',
             margin: '0 auto',
-            padding: '0.75rem 1.25rem',
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1rem',
-            flexWrap: 'wrap',
+            flexDirection: 'column',
+            gap: '0.6rem',
           }}
         >
-          {/* Brand & Academic Identity */}
+          {/* Top Row: Brand & Status & Utility Actions */}
           <div
-            onClick={() => setActiveView('home')}
-            style={{ display: 'flex', alignItems: 'center', gap: 12, cursor: 'pointer' }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '0.75rem',
+              width: '100%',
+            }}
           >
+            {/* Brand */}
             <div
-              style={{
-                width: 42,
-                height: 42,
-                borderRadius: 'var(--radius-md)',
-                background: 'linear-gradient(135deg, #E11D48 0%, #FE2C55 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 0 18px rgba(225, 29, 72, 0.55)',
-                border: '1px solid rgba(255, 255, 255, 0.25)',
-              }}
+              onClick={() => setActiveView('home')}
+              style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', flexShrink: 0 }}
             >
-              <Share2 size={22} color="#FFFFFF" strokeWidth={2.5} />
+              <div
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 'var(--radius-md)',
+                  background: 'linear-gradient(135deg, #E11D48 0%, #FE2C55 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 0 14px rgba(225, 29, 72, 0.55)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                }}
+              >
+                <Share2 size={18} color="#FFFFFF" strokeWidth={2.5} />
+              </div>
+
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: '1.15rem', color: '#FFFFFF' }}>
+                    GraphLab <span style={{ color: '#FE2C55' }}>TikTok</span>
+                  </span>
+                  <span className="badge badge-red" style={{ fontSize: '0.6rem', padding: '1px 6px' }}>
+                    UMG
+                  </span>
+                </div>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)' }} className="hide-on-mobile">
+                  Ingeniería en Sistemas • Ing. Walter Alvarez
+                </div>
+              </div>
             </div>
 
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: '1.25rem', color: '#FFFFFF' }}>
-                  GraphLab <span style={{ color: '#FE2C55' }}>TikTok</span>
-                </span>
-                <span className="badge badge-red" style={{ fontSize: '0.65rem', padding: '2px 8px' }}>
-                  UMG
-                </span>
+            {/* Right utility buttons */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              {/* Status Pill */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  padding: '3px 7px',
+                  borderRadius: 'var(--radius-md)',
+                  border: '1px solid var(--border-subtle)',
+                  fontFamily: 'Fira Code',
+                  fontSize: '0.72rem',
+                }}
+              >
+                <span style={{ color: '#FFFFFF' }}>|W|={totalVertices}</span>
+                <span style={{ color: 'var(--border-medium)' }}>•</span>
+                <span style={{ color: '#FE2C55' }}>|E|={totalEdges}</span>
               </div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
-                Ingeniería en Sistemas | Matemática Discreta • Ing. Walter Alvarez
-              </div>
+
+              <button
+                onClick={undoLastAction}
+                disabled={history.length === 0}
+                className="btn btn-secondary btn-sm"
+                style={{ padding: '5px 8px' }}
+                title="Deshacer"
+              >
+                <Undo2 size={13} />
+                <span className="hide-on-mobile">Deshacer</span>
+              </button>
+
+              <button
+                onClick={resetToOriginal}
+                className="btn btn-ghost btn-sm"
+                style={{ padding: '5px 8px', color: '#FE2C55' }}
+                title="Restaurar base original"
+              >
+                <RotateCcw size={13} />
+                <span className="hide-on-mobile">Reset</span>
+              </button>
+
+              <button
+                onClick={handleExportJson}
+                className="btn btn-secondary btn-sm hide-on-mobile"
+                style={{ padding: '5px 8px' }}
+                title="Exportar JSON"
+              >
+                <Download size={13} />
+                <span>JSON</span>
+              </button>
+
+              <button
+                onClick={() => setShowCreditsModal(true)}
+                className="btn btn-ghost btn-sm"
+                style={{ padding: '5px 8px', color: '#FFFFFF' }}
+                title="Créditos del Equipo"
+              >
+                <Users size={13} />
+                <span className="hide-on-mobile">Equipo</span>
+              </button>
+
+              <button
+                onClick={onOpenScenarios}
+                className="btn btn-primary btn-sm"
+                style={{ padding: '5px 10px', fontSize: '0.72rem' }}
+                title="Escenarios didácticos"
+              >
+                <Layers size={13} />
+                <span>Escenarios</span>
+              </button>
             </div>
           </div>
 
-          {/* Navigation Tabs */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          {/* Bottom Row: Horizontally Scrollable Navigation Tabs for Mobile */}
+          <nav className="nav-scroll-container">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeView === item.id;
@@ -132,95 +214,24 @@ export default function Navbar({ activeView, setActiveView, onOpenScenarios }) {
                       : 'btn-ghost'
                   }`}
                   style={{
-                    display: 'flex',
+                    display: 'inline-flex',
                     alignItems: 'center',
                     gap: 6,
-                    padding: '6px 12px',
+                    padding: '5px 10px',
                     borderRadius: 'var(--radius-md)',
+                    fontSize: '0.8rem',
+                    flexShrink: 0,
                     ...(item.isSpecial && !isActive
                       ? { border: '1px solid #FE2C55', color: '#FE2C55' }
                       : {}),
                   }}
                 >
-                  <Icon size={15} />
+                  <Icon size={14} />
                   <span>{item.label}</span>
                 </button>
               );
             })}
           </nav>
-
-          {/* Right Action & Graph Status Bar */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            {/* Live Graph Status Pills */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                background: 'rgba(255, 255, 255, 0.05)',
-                padding: '4px 8px',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-subtle)',
-                fontFamily: 'Fira Code',
-                fontSize: '0.75rem',
-              }}
-            >
-              <span style={{ color: '#FFFFFF' }}>|W|={totalVertices}</span>
-              <span style={{ color: 'var(--border-strong)' }}>•</span>
-              <span style={{ color: '#FE2C55' }}>|E|={totalEdges}</span>
-            </div>
-
-            <button
-              onClick={undoLastAction}
-              disabled={history.length === 0}
-              className="btn btn-secondary btn-sm"
-              style={{ padding: '6px 10px' }}
-              title="Deshacer última acción"
-            >
-              <Undo2 size={14} />
-              <span style={{ fontSize: '0.75rem' }}>Deshacer</span>
-            </button>
-
-            <button
-              onClick={resetToOriginal}
-              className="btn btn-ghost btn-sm"
-              style={{ padding: '6px 10px', color: '#FE2C55' }}
-              title="Restaurar el grafo original (4 usuarios, 5 videos, 9 aristas)"
-            >
-              <RotateCcw size={14} />
-              <span style={{ fontSize: '0.75rem' }}>Resetear</span>
-            </button>
-
-            <button
-              onClick={handleExportJson}
-              className="btn btn-secondary btn-sm"
-              style={{ padding: '6px 10px' }}
-              title="Exportar estado actual a JSON"
-            >
-              <Download size={14} />
-              <span style={{ fontSize: '0.75rem' }}>Exportar</span>
-            </button>
-
-            <button
-              onClick={() => setShowCreditsModal(true)}
-              className="btn btn-ghost btn-sm"
-              style={{ padding: '6px 10px', color: '#FFFFFF' }}
-              title="Ver créditos e integrantes UMG"
-            >
-              <Users size={14} />
-              <span style={{ fontSize: '0.75rem' }}>Equipo</span>
-            </button>
-
-            <button
-              onClick={onOpenScenarios}
-              className="btn btn-primary btn-sm"
-              style={{ padding: '6px 12px', fontSize: '0.75rem' }}
-              title="Explorar escenarios didácticos precargados"
-            >
-              <Layers size={14} />
-              <span>Escenarios</span>
-            </button>
-          </div>
         </div>
       </header>
 

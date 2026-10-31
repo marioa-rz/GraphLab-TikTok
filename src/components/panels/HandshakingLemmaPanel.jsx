@@ -59,11 +59,11 @@ export default function HandshakingLemmaPanel() {
             <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: '#FE2C55', fontWeight: 800, letterSpacing: '0.06em' }}>
               FÓRMULA FUNDAMENTAL DE GRAFOS NO DIRIGIDOS
             </div>
-            <div style={{ fontFamily: 'Fira Code', fontSize: '1.45rem', fontWeight: 800, color: '#FFFFFF', margin: '4px 0' }}>
+            <div style={{ fontFamily: 'Fira Code', fontSize: 'clamp(1.1rem, 3.8vw, 1.45rem)', fontWeight: 800, color: '#FFFFFF', margin: '4px 0' }}>
               ∑ deg(v) = 2 · |E|
             </div>
-            <div style={{ fontFamily: 'Fira Code', fontSize: '1.05rem', color: '#10B981', display: 'flex', alignItems: 'center', gap: 6 }}>
-              <span>[{lemma.totalUserDegree} (Usuarios) + {lemma.totalVideoDegree} (Videos) = {lemma.totalDegree}]</span>
+            <div style={{ fontFamily: 'Fira Code', fontSize: 'clamp(0.85rem, 2.8vw, 1.05rem)', color: '#10B981', display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+              <span>[{lemma.totalUserDegree} (U) + {lemma.totalVideoDegree} (V) = {lemma.totalDegree}]</span>
               <span style={{ color: '#FFFFFF' }}>==</span>
               <span>[2 · {lemma.edgeCount} = {lemma.doubleEdges}]</span>
             </div>

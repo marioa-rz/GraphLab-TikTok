@@ -13,7 +13,7 @@ import UserNodeComponent from './UserNode';
 import VideoNodeComponent from './VideoNode';
 import CustomEdge from './CustomEdge';
 import { useGraph } from '../../context/GraphContext';
-import { Maximize2, LayoutGrid, RotateCcw, Sparkles } from 'lucide-react';
+import { Maximize2, LayoutGrid, RotateCcw } from 'lucide-react';
 
 const nodeTypes = {
   user: UserNodeComponent,
@@ -24,7 +24,7 @@ const edgeTypes = {
   custom: CustomEdge,
 };
 
-function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = true }) {
+function FlowGraphInner({ height = 'clamp(440px, 62vh, 620px)', interactive = true, showMiniMap = true }) {
   const {
     users,
     videos,
@@ -72,7 +72,6 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
     }));
   }, [edges]);
 
-  // Manejar creación de conexión arrastrando
   const onConnect = useCallback(
     (params) => {
       if (!interactive) return;
@@ -81,7 +80,6 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
     [interactive, addEdge]
   );
 
-  // Manejar arrastre de nodos
   const onNodeDragStop = useCallback(
     (_, node) => {
       updateNodePosition(node.id, node.position);
@@ -89,12 +87,10 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
     [updateNodePosition]
   );
 
-  // Centrar visualización
   const handleFitView = useCallback(() => {
     reactFlowInstance.fitView({ padding: 0.22, duration: 400 });
   }, [reactFlowInstance]);
 
-  // Limpiar selecciones
   const handleClearSelection = useCallback(() => {
     setSelectedNodeId(null);
     setSelectedEdgeId(null);
@@ -124,7 +120,7 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
         onNodeDragStop={onNodeDragStop}
         fitView
         fitViewOptions={{ padding: 0.22 }}
-        minZoom={0.3}
+        minZoom={0.25}
         maxZoom={2.2}
         proOptions={{ hideAttribution: true }}
         onPaneClick={handleClearSelection}
@@ -140,16 +136,17 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
         />
         {showMiniMap && (
           <MiniMap
+            className="flow-minimap"
             nodeColor={(node) => (node.type === 'user' ? '#FFFFFF' : '#E11D48')}
             maskColor="rgba(8, 10, 15, 0.85)"
             style={{
-              height: 100,
-              width: 140,
+              height: 95,
+              width: 130,
               backgroundColor: '#121622',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--border-medium)',
-              bottom: 16,
-              right: 16,
+              bottom: 14,
+              right: 14,
             }}
           />
         )}
@@ -157,23 +154,24 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
 
       {/* Floating Canvas Controls Top Right */}
       <div
+        className="flow-controls-bar"
         style={{
           position: 'absolute',
-          top: 14,
-          right: 14,
+          top: 12,
+          right: 12,
           display: 'flex',
-          gap: 8,
+          gap: 6,
           zIndex: 10,
         }}
       >
         <button
           onClick={handleFitView}
           className="btn btn-secondary btn-sm"
-          style={{ backdropFilter: 'blur(10px)', background: 'rgba(18, 22, 34, 0.85)' }}
+          style={{ backdropFilter: 'blur(10px)', background: 'rgba(18, 22, 34, 0.88)' }}
           title="Centrar y ajustar grafo a la pantalla"
         >
-          <Maximize2 size={14} />
-          <span>Centrar</span>
+          <Maximize2 size={13} />
+          <span className="hide-on-mobile">Centrar</span>
         </button>
 
         <button
@@ -182,11 +180,11 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
             setTimeout(handleFitView, 100);
           }}
           className="btn btn-secondary btn-sm"
-          style={{ backdropFilter: 'blur(10px)', background: 'rgba(18, 22, 34, 0.85)' }}
-          title="Restaurar alineación bipartita en dos columnas"
+          style={{ backdropFilter: 'blur(10px)', background: 'rgba(18, 22, 34, 0.88)' }}
+          title="Restaurar alineación bipartita"
         >
-          <LayoutGrid size={14} />
-          <span>Alinear</span>
+          <LayoutGrid size={13} />
+          <span className="hide-on-mobile">Alinear</span>
         </button>
 
         <button
@@ -194,86 +192,87 @@ function FlowGraphInner({ height = '620px', interactive = true, showMiniMap = tr
           className="btn btn-ghost btn-sm"
           style={{
             backdropFilter: 'blur(10px)',
-            background: 'rgba(18, 22, 34, 0.85)',
+            background: 'rgba(18, 22, 34, 0.88)',
             border: '1px solid var(--border-subtle)',
           }}
-          title="Limpiar selecciones y resaltados"
+          title="Limpiar selecciones"
         >
-          <RotateCcw size={14} />
-          <span>Limpiar</span>
+          <RotateCcw size={13} />
+          <span className="hide-on-mobile">Limpiar</span>
         </button>
       </div>
 
-      {/* Floating Canvas Legend Top Left */}
+      {/* Floating Canvas Legend */}
       <div
+        className="flow-legend"
         style={{
           position: 'absolute',
-          top: 14,
-          left: 14,
-          background: 'rgba(18, 22, 34, 0.90)',
+          top: 12,
+          left: 12,
+          background: 'rgba(18, 22, 34, 0.92)',
           backdropFilter: 'blur(10px)',
           border: '1px solid var(--border-medium)',
           borderRadius: 'var(--radius-md)',
-          padding: '8px 14px',
+          padding: '6px 12px',
           display: 'flex',
           alignItems: 'center',
-          gap: 16,
-          fontSize: '0.75rem',
+          gap: 12,
+          fontSize: '0.72rem',
           zIndex: 10,
           boxShadow: 'var(--shadow-sm)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
           <span
             style={{
-              width: 12,
-              height: 12,
+              width: 10,
+              height: 10,
               borderRadius: '50%',
               backgroundColor: '#FFFFFF',
               display: 'inline-block',
-              boxShadow: '0 0 8px rgba(255, 255, 255, 0.8)',
+              boxShadow: '0 0 6px rgba(255, 255, 255, 0.8)',
             }}
           />
           <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Usuarios (U)</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
           <span
             style={{
-              width: 14,
-              height: 10,
-              borderRadius: 3,
+              width: 12,
+              height: 9,
+              borderRadius: 2,
               backgroundColor: '#E11D48',
               display: 'inline-block',
-              boxShadow: '0 0 10px rgba(225, 29, 72, 0.8)',
+              boxShadow: '0 0 8px rgba(225, 29, 72, 0.8)',
             }}
           />
           <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Videos (V)</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
           <span
             style={{
-              width: 18,
+              width: 14,
               height: 2,
               backgroundColor: 'rgba(255, 255, 255, 0.4)',
               display: 'inline-block',
             }}
           />
-          <span style={{ color: 'var(--text-secondary)' }}>Arista (Like)</span>
+          <span style={{ color: 'var(--text-secondary)' }}>Like</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
           <span
             style={{
-              width: 18,
+              width: 14,
               height: 3,
               backgroundColor: '#FACC15',
               display: 'inline-block',
-              boxShadow: '0 0 8px #FACC15',
+              boxShadow: '0 0 6px #FACC15',
             }}
           />
-          <span style={{ color: '#FACC15', fontWeight: 700 }}>Trayectoria</span>
+          <span style={{ color: '#FACC15', fontWeight: 700 }}>Camino</span>
         </div>
       </div>
     </div>

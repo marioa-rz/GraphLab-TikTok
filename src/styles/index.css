@@ -14,6 +14,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   overflow-x: hidden;
+  width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -29,8 +30,8 @@ code, pre, .font-mono {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -51,6 +52,7 @@ code, pre, .font-mono {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 100%;
   background-color: var(--bg-primary);
   background-image: 
     radial-gradient(ellipse 70% 40% at 50% -15%, rgba(225, 29, 72, 0.15), transparent 70%),
@@ -63,6 +65,7 @@ code, pre, .font-mono {
   flex: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 /* Glassmorphism Card Style */
@@ -103,6 +106,7 @@ code, pre, .font-mono {
   text-decoration: none;
   line-height: 1.25;
   user-select: none;
+  white-space: nowrap;
 }
 
 .btn:active {
@@ -422,4 +426,125 @@ code, pre, .font-mono {
 @keyframes modalScale {
   from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE RULES (TABLETS & SMARTPHONES)
+   ========================================================================== */
+
+/* Utility classes */
+.nav-scroll-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  max-width: 100%;
+}
+
+.nav-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .lab-grid, .presentation-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 1rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .btn {
+    padding: 0.5rem 0.875rem !important;
+    font-size: 0.8125rem !important;
+  }
+
+  .btn-lg {
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.92rem !important;
+  }
+
+  /* Hide verbose text on mobile buttons */
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  /* Compact Canvas Legend & Controls */
+  .flow-legend {
+    top: auto !important;
+    bottom: 12px !important;
+    left: 10px !important;
+    padding: 5px 8px !important;
+    font-size: 0.68rem !important;
+    gap: 8px !important;
+    max-width: calc(100% - 20px) !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+
+  .flow-controls-bar {
+    top: 10px !important;
+    right: 10px !important;
+    gap: 4px !important;
+  }
+
+  .flow-controls-bar .btn {
+    padding: 4px 8px !important;
+    font-size: 0.72rem !important;
+  }
+
+  /* Hide bulky minimap on phones */
+  .react-flow__minimap {
+    display: none !important;
+  }
+
+  /* Compact React Flow Controls on phone */
+  .react-flow__controls {
+    bottom: 50px !important;
+    left: 10px !important;
+    transform: scale(0.85);
+    transform-origin: bottom left;
+  }
+
+  /* Responsive typography */
+  h1 {
+    font-size: 1.85rem !important;
+  }
+  h2 {
+    font-size: 1.35rem !important;
+  }
+  h3 {
+    font-size: 1.1rem !important;
+  }
+
+  /* Modals on mobile */
+  .modal-card {
+    border-radius: var(--radius-lg) !important;
+    max-height: 95vh !important;
+    width: 96% !important;
+    margin: auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-sm {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  .node-video {
+    width: 155px !important;
+    padding: 8px 10px !important;
+  }
+
+  .node-user {
+    width: 58px !important;
+    height: 58px !important;
+  }
 }
