@@ -159,7 +159,7 @@ export default function NewInteractionSimulator() {
           ) : (
             <>
               <Zap size={20} fill="white" />
-              <span>⚡ Simular Click / Like de Usuario A en V3</span>
+              <span>Simular Click / Like de Usuario A en V3</span>
             </>
           )}
         </button>
